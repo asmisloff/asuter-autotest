@@ -1,5 +1,6 @@
 package ru.vniizht.asuter.autotest.cars;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,11 +16,9 @@ import static ru.vniizht.asuter.autotest.CustomAsserts.assertInputInWrongState;
 /** Раздел "Вагоны", поле "масса тары". */
 public class ContainerMassValidationTest extends MainParametersTest {
 
-    /**
-     * Масса тары: валидный ввод (пп. 1, 3).
-     */
     @ParameterizedTest
     @ValueSource(strings = {"0.001", "1000"})
+    @DisplayName("Валидный ввод, пп. 1, 3")
     public void testSelfWeightInputValidCases(String v) {
         String expectedValue = v.replace('.', ',');
         setValueAndPressTab(containerMassInput, v);
@@ -27,10 +26,8 @@ public class ContainerMassValidationTest extends MainParametersTest {
         assertInputInValidState(fullMassInput, expectedValue);
     }
 
-    /**
-     * Масса тары: валидный ввод с автокоррекцией (п. 5).
-     */
     @Test
+    @DisplayName("Валидный ввод с автокоррекцией, п. 5")
     public void testSelfWeightInputValidCasesWithAutoCorrection() {
         String expectedValue = "5";
         setValueAndPressTab(containerMassInput, "05");
@@ -44,9 +41,6 @@ public class ContainerMassValidationTest extends MainParametersTest {
         );
     }
 
-    /**
-     * Масса тары: невалидный ввод (пп. 2, 4, 6, 7, 8, 9).
-     */
     @ParameterizedTest
     @CsvSource(
             value = {
@@ -55,6 +49,7 @@ public class ContainerMassValidationTest extends MainParametersTest {
             },
             delimiter = ':'
     )
+    @DisplayName("Невалидный ввод, пп. 2, 4, 6, 7, 8, 9")
     public void testSelfWeightInputValidCasesWithAutoCorrection(String v, String expected) {
         setValueAndPressTab(containerMassInput, v);
         if (expected == null) {

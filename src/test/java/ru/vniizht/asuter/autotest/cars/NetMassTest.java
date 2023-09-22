@@ -1,5 +1,6 @@
 package ru.vniizht.asuter.autotest.cars;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -23,6 +24,7 @@ public class NetMassTest extends MainParametersTest {
             value = {"0,001:0,001", "10000:10000", "05:5"},
             delimiter = ':'
     )
+    @DisplayName("Валидный ввод")
     public void testValidUserInput(@Nonnull String value, @Nullable String expected) {
         expected = Objects.requireNonNullElse(expected, "");
         setValueAndPressTab(netMassInput, value);
@@ -37,6 +39,7 @@ public class NetMassTest extends MainParametersTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"0", "№№№", "e"})
+    @DisplayName("Ввод игнорируемых символов")
     public void testFilteredUserInput(@Nonnull String value) {
         setValueAndPressTab(netMassInput, value);
         assertInputInWrongState(netMassInput, "", Messages.FieldIsRequired);
@@ -53,6 +56,7 @@ public class NetMassTest extends MainParametersTest {
             value = {"10000.001:10000,001", "1.5555:1,5555", "-1000:-1000", "0.001+100000000000000:0,0011", "0.00 1:0,001"},
             delimiter = ':'
     )
+    @DisplayName("Невалидный ввод: числа вне допустимого диапазона и с неверным числом знаков после запятой")
     public void testInvalidUserInput(@Nonnull String value, @Nonnull String expected) {
         setValueAndPressTab(netMassInput, value);
         assertInputInWrongState(
