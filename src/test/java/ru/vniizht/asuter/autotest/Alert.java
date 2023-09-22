@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 
 import java.util.Objects;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
 public record Alert(SelenideElement modal, SelenideElement h3, SelenideElement closeButton) {
@@ -26,5 +27,9 @@ public record Alert(SelenideElement modal, SelenideElement h3, SelenideElement c
 
     public void close() {
         closeButton.click();
+    }
+
+    public void shouldHaveText(String expected) {
+        h3.shouldHave(text(expected));
     }
 }
