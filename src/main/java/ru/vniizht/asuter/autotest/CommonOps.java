@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -20,8 +19,10 @@ public class CommonOps {
     private static final Logger logger = LoggerFactory.getLogger(CommonOps.class);
     private static final NumberFormat ruNumberFmt = DecimalFormat.getNumberInstance(new Locale("ru"));
 
+    public static final String ROOT = "http://asuter-dev.vniizht.lan";
+
     public static void login() {
-        open("http://asuter-dev.vniizht.lan/login");
+        open(ROOT + "/login");
         if (webdriver().object().getCurrentUrl().endsWith("/login")) {
             $(By.id("username")).sendKeys("autotest");
             $(By.id("password")).sendKeys("AutoTest_113");

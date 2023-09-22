@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 
 import java.util.Objects;
 
+import static com.codeborne.selenide.Condition.attributeMatching;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -27,6 +28,10 @@ public record Alert(SelenideElement modal, SelenideElement h3, SelenideElement c
 
     public void close() {
         closeButton.click();
+    }
+
+    public void shouldBeVisible() {
+        h3.shouldNotHave(attributeMatching("class", ".*modalClosed.*"));
     }
 
     public void shouldHaveText(String expected) {

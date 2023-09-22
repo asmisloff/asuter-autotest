@@ -1,4 +1,4 @@
-package ru.vniizht.asuter.autotest.cars;
+package ru.vniizht.asuter.autotest.car;
 
 import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.SelenideElement;
