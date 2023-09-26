@@ -8,9 +8,9 @@ public enum WireMaterial {
     STEEL_COPPER("сталемедный"),
     STEEL_ALUMINIUM("сталеалюминиевый");
 
-    public final String value;
+    public final String displayedText;
 
     WireMaterial(String value) {
-        this.value = value;
+        this.displayedText = value;
     }
 }

@@ -3,6 +3,7 @@ package ru.vniizht.asuter.autotest;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import static com.codeborne.selenide.Condition.attributeMatching;
@@ -26,15 +27,25 @@ public record Alert(SelenideElement modal, SelenideElement h3, SelenideElement c
         return h3.text();
     }
 
-    public void close() {
+    public void closeAndCheckIfClosed() {
         closeButton.click();
+        shouldBeHidden();
     }
 
-    public void shouldBeVisible() {
-        h3.shouldNotHave(attributeMatching("class", ".*modalClosed.*"));
+    public Alert shouldBeVisible() {
+        modal.shouldNotHave(
+            attributeMatching("class", ".*modalClosed.*"),
+            Duration.ofSeconds(10)
+        );
+        return this;
     }
 
-    public void shouldHaveText(String expected) {
-        h3.shouldHave(text(expected));
+    public void shouldBeHidden() {
+        modal.shouldHave(attributeMatching("class", ".*modalClosed.*"));
+    }
+
+    public Alert shouldHaveText(String expected) {
+        h3.shouldHave(text(expected), Duration.ofSeconds(10));
+        return this;
     }
 }

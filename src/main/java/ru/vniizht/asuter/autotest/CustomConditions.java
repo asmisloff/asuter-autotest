@@ -3,12 +3,18 @@ package ru.vniizht.asuter.autotest;
 import com.codeborne.selenide.CheckResult;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Driver;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.time.Duration;
 import java.util.Objects;
+
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$;
 
 @ParametersAreNonnullByDefault
 public class CustomConditions {
@@ -33,6 +39,17 @@ public class CustomConditions {
             new OuterDivIsPink(),
             Condition.value(expectedValue)
         };
+    }
+
+    public static void notificationShouldAppear(String text) {
+        SelenideElement notification = $(By.xpath("//div[@data-testid='notification']"));
+        notification
+            .shouldHave(text(text))
+            .shouldNot(exist, Duration.ofSeconds(10));
+//        $(By.className("Notification__notificationContainer--2osg1"))
+//            .shouldHave(text(text))
+//            .shouldNot(exist, Duration.ofSeconds(10));
+//        $(By.xpath(String.format("//div[@class='Notification' and contains(text(), '%s')]", text))).shouldBe(visible);
     }
 }
 
