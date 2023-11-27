@@ -19,9 +19,9 @@ public class PageDirectNetwork extends BasePage {
     public SelenideElement buttonCopy;
 
     @FindBy(xpath = "//input[@data-testid='fiderCount']")
-    public SelenideElement inputPowerWireQuantity;
+    public SelenideElement inputFeederQuantity;
 
-    Select dropdownMenuPowerWireMark = new Select($x("//select[@data-testid='fiderId']"));
+    Select dropdownMenuFeederMark = new Select($x("//select[@data-testid='fiderId']"));
 
     @FindBy(xpath = "//input[@data-testid='contactWireCount']")
     SelenideElement inputContactWireQuantity;
@@ -29,9 +29,9 @@ public class PageDirectNetwork extends BasePage {
     Select dropdownMenuContactWireMark = new Select($x("//select[@data-testid='contactWireId']"));
 
     @FindBy(xpath = "//input[@data-testid='powerWireCount']")
-    SelenideElement inputSupplyWireQuantity;
+    SelenideElement inputPowerWireQuantity;
 
-    Select dropdownMenuSupplyWireMark = new Select($x("//select[@data-testid='powerWireId']"));
+    Select dropdownMenuPowerWireMark = new Select($x("//select[@data-testid='powerWireId']"));
 
     @FindBy(xpath = "//input[@data-testid='railCount']")
     SelenideElement inputTrackQuantity;
@@ -88,14 +88,14 @@ public class PageDirectNetwork extends BasePage {
     }
 
     /** Ввести количество несущих проводов */
-    public PageDirectNetwork inputPowerWireQuantity(int value) {
-        inputPowerWireQuantity.sendKeys(String.valueOf(value));
+    public PageDirectNetwork inputFeederWireQuantity(int value) {
+        inputFeederQuantity.sendKeys(String.valueOf(value));
         return this;
     }
 
     /** Ввести количество несущих проводов */
-    public PageDirectNetwork inputPowerWireQuantity(String value) {
-        inputPowerWireQuantity.sendKeys(value);
+    public PageDirectNetwork inputFeederWireQuantity(String value) {
+        inputFeederQuantity.sendKeys(value);
         return this;
     }
 
@@ -112,14 +112,14 @@ public class PageDirectNetwork extends BasePage {
     }
 
     /** Ввести количество усиливающих проводов */
-    public PageDirectNetwork inputSupplyWireQuantity(int value) {
-        inputSupplyWireQuantity.sendKeys(String.valueOf(value));
+    public PageDirectNetwork inputPowerWireQuantity(int value) {
+        inputPowerWireQuantity.sendKeys(String.valueOf(value));
         return this;
     }
 
     /** Ввести количество усиливающих проводов */
-    public PageDirectNetwork inputSupplyWireQuantity(String value) {
-        inputSupplyWireQuantity.sendKeys(value);
+    public PageDirectNetwork inputPowerWireQuantity(String value) {
+        inputPowerWireQuantity.sendKeys(value);
         return this;
     }
 
@@ -136,8 +136,8 @@ public class PageDirectNetwork extends BasePage {
     }
 
     /** Выбрать марку питающего/несущего (в зависимости от активной вкладки) провода из выпадающего списка по названию */
-    public PageDirectNetwork selectPowerWireByName(String value) {
-        dropdownMenuPowerWireMark.selectByVisibleText(value == null ? "" : value);
+    public PageDirectNetwork selectFeederByName(String value) {
+        dropdownMenuFeederMark.selectByVisibleText(value == null ? "" : value);
         return this;
     }
 
@@ -148,8 +148,8 @@ public class PageDirectNetwork extends BasePage {
     }
 
     /** Выбрать марку усиливающего провода из выпадающего списка по названию */
-    public PageDirectNetwork selectSupplyWireByName(String value) {
-        dropdownMenuSupplyWireMark.selectByVisibleText(value == null ? "" : value);
+    public PageDirectNetwork selectPowerWireByName(String value) {
+        dropdownMenuPowerWireMark.selectByVisibleText(value == null ? "" : value);
         return this;
     }
 
