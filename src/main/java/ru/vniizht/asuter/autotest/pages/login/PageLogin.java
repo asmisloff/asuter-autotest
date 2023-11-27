@@ -4,14 +4,15 @@ import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.vniizht.asuter.autotest.annotation.Url;
+import ru.vniizht.asuter.autotest.constants.Urls;
 import ru.vniizht.asuter.autotest.pages.BasePage;
 import ru.vniizht.asuter.autotest.pages.main.PageMain;
 
 
-@Url("http://asuter-dev.vniizht.lan/login")
+@Url("login")
 public class PageLogin extends BasePage {
 
-    public static String loginErrorUrl = "http://asuter-dev.vniizht.lan/loginError";
+    public static final String loginErrorUrl = Urls.baseUrl + "loginError";
 
     @FindBy(id = "username")
     public WebElement inputUsername;

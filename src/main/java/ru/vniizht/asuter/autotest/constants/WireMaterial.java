@@ -1,4 +1,4 @@
-package ru.vniizht.asuter.autotest.wire.and.rail;
+package ru.vniizht.asuter.autotest.constants;
 
 public enum WireMaterial {
     NONE(""),

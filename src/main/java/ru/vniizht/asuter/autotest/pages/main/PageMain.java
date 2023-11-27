@@ -6,12 +6,12 @@ import ru.vniizht.asuter.autotest.annotation.Url;
 import ru.vniizht.asuter.autotest.pages.BasePage;
 import ru.vniizht.asuter.autotest.pages.login.PageLogin;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.page;
 
-@Url("http://asuter-dev.vniizht.lan/database")
+@Url("database")
 public class PageMain extends BasePage {
 
-    @FindBy(xpath = "//button[@type='button']")
+    @FindBy(xpath = "//button[@data-testid='exitBtn']")
     public SelenideElement buttonLogout;
 
 
