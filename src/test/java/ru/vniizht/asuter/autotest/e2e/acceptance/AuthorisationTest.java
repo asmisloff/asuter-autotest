@@ -1,5 +1,6 @@
 package ru.vniizht.asuter.autotest.e2e.acceptance;
 
+import io.qase.api.annotation.QaseId;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -26,6 +27,7 @@ public class AuthorisationTest extends BaseTest {
     @CsvFileSource(resources = logPassCsvPath)
     @Order(1)
     @DisplayName("Вход под логином и паролем действующего пользователя")
+    @QaseId(37)
     void validLoginAndPassword(String login, String password) {
         PageMain pageMain = open(PageLogin.class)
                 .enterUsername(login)

@@ -41,7 +41,7 @@ public class PageDirectNetwork extends BasePage {
     @FindBy(xpath = "//a[@data-testid='supplyLineBtn']")
     public SelenideElement buttonSupplyLine;
 
-    @FindBy(xpath = "//span[@data-testid='tractiveNetworkBtn']")
+    @FindBy(xpath = "//a[@data-testid='tractiveNetworkBtn']")
     public SelenideElement buttonTractionNetwork;
 
     @FindBy(xpath = "//input[@data-testid='wiresResistance']")
@@ -156,6 +156,18 @@ public class PageDirectNetwork extends BasePage {
     /** Выбрать марку пути из выпадающего списка по названию */
     public PageDirectNetwork selectTrackByName(String value) {
         dropdownMenuTrackMark.selectByVisibleText(value == null ? "" : value);
+        return this;
+    }
+
+    /** Переключиться на вкладку "Питающая линия" */
+    public PageDirectNetwork switchToSupplyLine() {
+        buttonSupplyLine.click();
+        return this;
+    }
+
+    /** Переключиться на вкладку "Тяговая сеть" */
+    public PageDirectNetwork switchToTractionNetwork() {
+        buttonTractionNetwork.click();
         return this;
     }
 

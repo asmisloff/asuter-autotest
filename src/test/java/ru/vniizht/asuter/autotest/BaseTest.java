@@ -14,7 +14,7 @@ public class BaseTest {
 
     @BeforeAll
     protected static void configureAllureSelenide() {
-        AllureSelenide listener = new AllureSelenide()
+        AllureSelenide listener = new CustomAllureSelenideListener()
                 .screenshots(true)
                 .savePageSource(false);
         SelenideLogger.addListener("AllureSelenide", listener);
