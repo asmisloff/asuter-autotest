@@ -12,12 +12,10 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
-// TODO блокировка учетной записи после 5 попыток входа
-// TODO восстановление пароля
-
 // ASUTER-37
 @DisplayName("Авторизация")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Deprecated() // не интегрировано с Qase, вернуться и переделать, если (когда) появятся тест кейсы
 public class AuthorisationTest extends BaseTest {
 
     private static final String logPassCsvPath = "/csv/logpass/basic_valid/logpass.csv";

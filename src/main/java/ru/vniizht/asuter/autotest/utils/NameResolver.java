@@ -15,9 +15,9 @@ public class NameResolver {
             String railName
     ) {
         feederName = (feederCount <= 1 ? "" : feederCount) + feederName;
-        contactWireName = (contactWireCount <= 1 ? "" : "+" + contactWireCount) + contactWireName;
-        powerWireName = (powerWireCount <= 1 ? "" : "+" + powerWireName) + powerWireName;
-        railName = (railCount <= 1 ? "" : "+" + (railCount * 2)) + railName;
+        contactWireName = contactWireCount <= 0 ? "" : ("+" + (contactWireCount == 1 ? "" : contactWireCount)) + contactWireName;
+        powerWireName = powerWireCount <= 0 ? "" : ("+" + (powerWireCount == 1 ? "" : powerWireCount)) + powerWireName;
+        railName = railCount <= 0 ? "" : ("+" + railCount * 2 + railName);
         return (feederName + contactWireName + powerWireName + railName)
                 .replaceFirst("^\\++", "");
     }

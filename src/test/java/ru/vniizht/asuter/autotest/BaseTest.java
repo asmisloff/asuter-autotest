@@ -11,6 +11,7 @@ import ru.vniizht.asuter.autotest.utils.UrlDeterminator;
 public class BaseTest {
 
     private static final UrlDeterminator urlDeterminator = new UrlDeterminator();
+    private static boolean isLoggedIn = false;
 
     @BeforeAll
     protected static void configureAllureSelenide() {
@@ -48,5 +49,11 @@ public class BaseTest {
         String login = "testnsi"; // TODO не хардкодить, возможно тянуть из csv с тестовыми значениями
         String password = "Testtest2020)"; // TODO не хардкодить, возможно тянуть из csv с тестовыми значениями
         login(login, password);
+    }
+
+    public static void loginIfNeeded() {
+        if (isLoggedIn) return;
+        isLoggedIn = true;
+        login();
     }
 }
