@@ -94,6 +94,11 @@ public class PageDirectNetwork extends BasePage<PageDirectNetwork> {
     @As("Кнопка \"X\" (закрыть всплывающее окно)")
     public WebElement buttonAlertClose;
 
+    @FindBy(xpath = "/html/body/div/div[2]/div[4]/div/div/div/h3")
+    @As("Текст всплывающего окна")
+    public SelenideElement alertMessage;
+    
+
 
     /** Нажать кнопку "Сохранить" */
     public PageDirectNetwork clickSave() {

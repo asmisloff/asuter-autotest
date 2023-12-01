@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
+import ru.vniizht.asuter.autotest.constants.User;
 import ru.vniizht.asuter.autotest.pages.BasePage;
 import ru.vniizht.asuter.autotest.pages.login.PageLogin;
 import ru.vniizht.asuter.autotest.utils.UrlDeterminator;
@@ -43,6 +44,13 @@ public class BaseTest {
     }
 
     /**
+     * Открыть страницу авторизации и зайти под логином и паролем указанного пользователя
+     */
+    public static void login(User user) {
+        login(user.login, user.password);
+    }
+
+    /**
      * Открыть страницу авторизации и зайти под стандартным логином и паролем (с правом выполнения расчетов)
      */
     public static void login() {
@@ -55,5 +63,17 @@ public class BaseTest {
         if (isLoggedIn) return;
         isLoggedIn = true;
         login();
+    }
+
+    public static void loginIfNeeded(String login, String password) {
+        if (isLoggedIn) return;
+        isLoggedIn = true;
+        login(login, password);
+    }
+
+    public static void loginIfNeeded(User user) {
+        if (isLoggedIn) return;
+        isLoggedIn = true;
+        login(user);
     }
 }
