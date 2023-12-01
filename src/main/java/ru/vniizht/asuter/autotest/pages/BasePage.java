@@ -1,5 +1,6 @@
 package ru.vniizht.asuter.autotest.pages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import ru.vniizht.asuter.autotest.constants.Execution;
 import ru.vniizht.asuter.autotest.utils.UrlDeterminator;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -26,6 +28,13 @@ public class BasePage<P extends BasePage<P>> {
 
     @SuppressWarnings("unchecked")
     public P also(Consumer<P> action) {
+        action.accept((P) this);
+        return (P) this;
+    }
+
+    /** То же самое, что и also. Для более читабельных цепочек методов. */
+    @SuppressWarnings("unchecked")
+    public P check(Consumer<P> action) {
         action.accept((P) this);
         return (P) this;
     }

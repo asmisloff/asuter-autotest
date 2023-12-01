@@ -32,6 +32,13 @@ public class PageDirectNetworkList extends BasePage<PageDirectNetworkList> {
     @FindBy(xpath = "/html/body/div/div[2]/div[1]/div/div[2]/div[2]/div/table/tbody/tr")
     ElementsCollection allRows;
 
+    @FindBy(xpath = "//div[@data-testid='ConfirmModal']")
+    public SelenideElement windowConfirmModal;
+
+    @FindBy(xpath = "/html/body/div/div[2]/div[2]/div/p")
+    public SelenideElement textWindowConfirmModal;
+    
+
     public PageDirectNetwork clickCreate() {
         buttonCreate.click();
         return page(PageDirectNetwork.class);
@@ -62,6 +69,22 @@ public class PageDirectNetworkList extends BasePage<PageDirectNetworkList> {
             if (Objects.equals(row.cellName.text(), name)) results.add(row);
         }
         return results;
+    }
+
+    public DirectNetworkListRow findFirstRowByType(String type) {
+        for (int i = 0; i < allRows.size(); i++) {
+            var row = new DirectNetworkListRow(this, i+1);
+            if (Objects.equals(row.cellType.text(), type)) return row;
+        }
+        return null;
+    }
+
+    public DirectNetworkListRow findFirstSupplyLineRow() {
+        return findFirstRowByType("Питающая линия");
+    }
+
+    public DirectNetworkListRow findFirstTractiveNetworkRow() {
+        return findFirstRowByType("Тяговая сеть");
     }
 
     public class DirectNetworkListRow {

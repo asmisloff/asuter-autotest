@@ -16,13 +16,14 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Condition.cssClass;
 import static com.codeborne.selenide.Selenide.element;
 
-@DisplayName("Сохранение")
+@DisplayName("Тяговая сеть постоянного тока: сохранение")
 public class SavingTest extends BaseTest {
 
     private final Queue<String> namesToDelete = new LinkedList<>();
 
     @AfterEach
     public void deleteCreated() {
+        if (namesToDelete.isEmpty()) return;
         PageDirectNetworkList page = open(PageDirectNetworkList.class)
                 .waitTime();
         while (!namesToDelete.isEmpty()) {

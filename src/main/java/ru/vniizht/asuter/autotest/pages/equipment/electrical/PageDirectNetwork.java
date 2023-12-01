@@ -1,5 +1,6 @@
 package ru.vniizht.asuter.autotest.pages.equipment.electrical;
 
+import com.codeborne.selenide.As;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.WebElement;
@@ -14,41 +15,51 @@ import static com.codeborne.selenide.Selenide.$x;
 public class PageDirectNetwork extends BasePage<PageDirectNetwork> {
 
     @FindBy(xpath = "//button[@data-testid='saveBtn']")
+    @As("Кнопка сохранить")
     public SelenideElement buttonSave;
 
     @FindBy(xpath = "//button[@data-testid='calculateBtn']")
+    @As("Кнопка рассчитать")
     public SelenideElement buttonCalculate;
 
     @FindBy(xpath = "//button[contains(@title, 'на')]")
+    @As("Кнопка создать на основе текущей")
     public SelenideElement buttonCopy;
 
     @FindBy(xpath = "//input[@data-testid='fiderCount']")
+    @As("Поле количества питающих/несущих проводов")
     public SelenideElement inputFeederQuantity;
 
-    public Select dropdownMenuFeederMark = new Select($x("//select[@data-testid='fiderId']"));
+    public Select dropdownMenuFeederMark = new Select($x("//select[@data-testid='fiderId']").as("Марка питающего/несущего провода"));
 
     @FindBy(xpath = "//input[@data-testid='contactWireCount']")
+    @As("Поле количества контактных проводов")
     public SelenideElement inputContactWireQuantity;
 
-    public Select dropdownMenuContactWireMark = new Select($x("//select[@data-testid='contactWireId']"));
+    public Select dropdownMenuContactWireMark = new Select($x("//select[@data-testid='contactWireId']").as("Марка контактного провода"));
 
     @FindBy(xpath = "//input[@data-testid='powerWireCount']")
+    @As("Поле количества усиливающих проводов")
     public SelenideElement inputPowerWireQuantity;
 
-    public Select dropdownMenuPowerWireMark = new Select($x("//select[@data-testid='powerWireId']"));
+    public Select dropdownMenuPowerWireMark = new Select($x("//select[@data-testid='powerWireId']").as("Марка усиливающего провода"));
 
     @FindBy(xpath = "//input[@data-testid='railCount']")
+    @As("Поле количества путей")
     public SelenideElement inputTrackQuantity;
 
-    public Select dropdownMenuTrackMark = new Select($x("//select[@data-testid='railId']"));
+    public Select dropdownMenuTrackMark = new Select($x("//select[@data-testid='railId']").as("Марка путей"));
 
     @FindBy(xpath = "//*[@data-testid='supplyLineBtn']")
+    @As("Кнопка переключения на вкладку \"Питающая линия\"")
     public SelenideElement buttonSupplyLine;
 
     @FindBy(xpath = "//*[@data-testid='tractiveNetworkBtn']")
+    @As("Кнопка переключения на вкладку \"Тяговая сеть\"")
     public SelenideElement buttonTractionNetwork;
 
     @FindBy(xpath = "//input[@data-testid='wiresResistance']")
+    @As("Расчетные данные сопротивления контактной подвески")
     public SelenideElement calculatedRks;
 
     @FindBy(xpath = "//input[@data-testid='railsResistance']")
@@ -72,6 +83,10 @@ public class PageDirectNetwork extends BasePage<PageDirectNetwork> {
     @FindBy(xpath = "//li[@data-testid='CancelBtn']")
     public SelenideElement buttonConfirmationWindowCancel;
 
+    @FindBy(xpath = "/html/body/div/div[2]/div[4]/div/div/div/button")
+    @As("Кнопка \"X\" (закрыть всплывающее окно)")
+    public WebElement buttonAlertClose;
+
 
     /** Нажать кнопку "Сохранить" */
     public PageDirectNetwork clickSave() {
@@ -88,6 +103,24 @@ public class PageDirectNetwork extends BasePage<PageDirectNetwork> {
     /** Нажать кнопку "Создать на основе текущей" */
     public PageDirectNetwork clickCopy() {
         buttonCopy.click();
+        return this;
+    }
+
+    /** Нажать на кнопку "Нет" во всплывающем модальном окне */
+    public PageDirectNetwork clickCancel() {
+        buttonConfirmationWindowCancel.click();
+        return this;
+    }
+
+    /** Нажать на кнопку "Да" во всплывающем модальном окне */
+    public PageDirectNetwork clickConfirm() {
+        buttonConfirmationWindowAccept.click();
+        return this;
+    }
+
+    /** Нажать на кнопку закрытия оповещения */
+    public PageDirectNetwork clickCloseAlert() {
+        buttonAlertClose.click();
         return this;
     }
 
