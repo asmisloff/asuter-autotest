@@ -63,24 +63,31 @@ public class PageDirectNetwork extends BasePage<PageDirectNetwork> {
     public SelenideElement calculatedRks;
 
     @FindBy(xpath = "//input[@data-testid='railsResistance']")
+    @As("Расчетные данные сопротивления рельс")
     public SelenideElement calculatedRp;
 
     @FindBy(xpath = "//input[@data-testid='limitAmperage']")
+    @As("Расчетные данные допустимого длительного тока")
     public SelenideElement calculatedIdop;
 
     @FindBy(xpath = "//input[@data-testid='limitTemperature']")
+    @As("Расчетные данные допустимой длительной температуры лимитирующего провода")
     public SelenideElement calculatedTdl;
 
     @FindBy(xpath = "//input[@data-testid='contactAmperage']")
+    @As("Расчетные данные доли тока в контактном проводе")
     public SelenideElement calculatedIkp;
 
     @FindBy(xpath = "//div[@data-testid='ConfirmModal']")
+    @As("Модальное окно подтверждения")
     public SelenideElement confirmationWindow;
 
     @FindBy(xpath = "//li[@data-testid='OKBtn']")
+    @As("Кнопка \"Да\" в модальном окне подтверждения")
     public SelenideElement buttonConfirmationWindowAccept;
 
     @FindBy(xpath = "//li[@data-testid='CancelBtn']")
+    @As("Кнопка \"Нет\" в модальном окне подтверждения")
     public SelenideElement buttonConfirmationWindowCancel;
 
     @FindBy(xpath = "/html/body/div/div[2]/div[4]/div/div/div/button")

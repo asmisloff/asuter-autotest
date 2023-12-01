@@ -1,5 +1,6 @@
 package ru.vniizht.asuter.autotest.pages.equipment.electrical;
 
+import com.codeborne.selenide.As;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -18,24 +19,31 @@ import static com.codeborne.selenide.Selenide.page;
 public class PageDirectNetworkList extends BasePage<PageDirectNetworkList> {
 
     @FindBy(xpath = "//button[@title='Создать']")
+    @As("Кнопка \"Создать\"")
     SelenideElement buttonCreate;
 
     @FindBy(xpath = "//li[@role='menuitem']")
+    @As("Кнопка \"Удалить\" в контекстном меню")
     public SelenideElement deleteButtonContextMenu;
 
     @FindBy(xpath = "//li[@data-testid='OKBtn']")
+    @As("Кнопка подтверждения в модальном окне")
     public SelenideElement okModalButton;
 
     @FindBy(xpath = "//li[@data-testid='CancelBtn']")
+    @As("Кнопка отмены в модальном окне")
     public SelenideElement cancelModalButton;
 
     @FindBy(xpath = "/html/body/div/div[2]/div[1]/div/div[2]/div[2]/div/table/tbody/tr")
+    @As("Все строки таблицы тяговых сетей")
     ElementsCollection allRows;
 
     @FindBy(xpath = "//div[@data-testid='ConfirmModal']")
+    @As("Модальное окно подтверждения")
     public SelenideElement windowConfirmModal;
 
     @FindBy(xpath = "/html/body/div/div[2]/div[2]/div/p")
+    @As("Текст в модальном окне подтверждения")
     public SelenideElement textWindowConfirmModal;
     
 
