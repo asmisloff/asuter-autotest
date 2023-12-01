@@ -860,4 +860,52 @@ public class TransitionsAndStatesTest extends BaseTest {
                     element(p.dropdownMenuTrackMark.getFirstSelectedOption()).shouldHave(text(trackMark.get()));
                 });
     }
+
+
+    @Test
+    @QaseId(245)
+    @DisplayName("Кнопка \"Рассчитать\" заблокирована после сохранения питающей линии")
+    public void calculateButtonDisabledAfterSavingSupplyLine() {
+        loginIfNeeded();
+        open(PageDirectNetworkList.class)
+                .clickCreate()
+                .selectFirstFeeder()
+                .clickCalculate()
+                .waitTime()
+                .clickSave()
+                .waitTime()
+                .also(p -> namesToDelete.add(p.resolveNameByFields()))
+                .check(p -> {
+                    // кнопка рассчитать заблокирована
+                    p.buttonCalculate.shouldBe(disabled);
+                });
+    }
+
+
+    @Test
+    @QaseId(246)
+    @DisplayName("Кнопка \"Рассчитать\" заблокирована после сохранения тяговой сети")
+    public void calculateButtonDisabledAfterSavingTractionNetwork() {
+        loginIfNeeded();
+        open(PageDirectNetworkList.class)
+                .clickCreate()
+                .switchToTractionNetwork()
+                .inputFeederWireQuantity(1)
+                .inputContactWireQuantity(1)
+                .inputPowerWireQuantity(1)
+                .inputTrackQuantity(1)
+                .selectFirstFeeder()
+                .selectFirstContactWire()
+                .selectFirstPowerWire()
+                .selectFirstTrack()
+                .clickCalculate()
+                .waitTime()
+                .clickSave()
+                .waitTime()
+                .also(p -> namesToDelete.add(p.resolveNameByFields()))
+                .check(p -> {
+                    // кнопка сохранения заблокирована
+                    p.buttonCalculate.shouldBe(disabled);
+                });
+    }
 }
