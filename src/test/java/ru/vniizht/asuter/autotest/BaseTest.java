@@ -7,12 +7,13 @@ import org.junit.jupiter.api.BeforeAll;
 import ru.vniizht.asuter.autotest.constants.User;
 import ru.vniizht.asuter.autotest.pages.BasePage;
 import ru.vniizht.asuter.autotest.pages.login.PageLogin;
+import ru.vniizht.asuter.autotest.pages.main.PageMain;
 import ru.vniizht.asuter.autotest.utils.UrlDeterminator;
 
 public class BaseTest {
 
     private static final UrlDeterminator urlDeterminator = new UrlDeterminator();
-    private static boolean isLoggedIn = false;
+    private static User currentUser = null;
 
     @BeforeAll
     protected static void configureAllureSelenide() {
@@ -37,43 +38,43 @@ public class BaseTest {
      * Открыть страницу авторизации и зайти под указанными логином и паролем
      */
     public static void login(String login, String password) {
-        open(PageLogin.class)
-                .enterUsername(login)
-                .enterPassword(password)
-                .clickLogin();
+        login(new User(login, password));
     }
 
     /**
      * Открыть страницу авторизации и зайти под логином и паролем указанного пользователя
      */
     public static void login(User user) {
-        login(user.login, user.password);
+        open(PageLogin.class)
+                .enterUsername(user.login())
+                .enterPassword(user.password())
+                .clickLogin();
+        currentUser = user;
     }
 
     /**
      * Открыть страницу авторизации и зайти под стандартным логином и паролем (с правом выполнения расчетов)
      */
     public static void login() {
-        String login = "testnsi"; // TODO не хардкодить, возможно тянуть из csv с тестовыми значениями
-        String password = "Testtest2020)"; // TODO не хардкодить, возможно тянуть из csv с тестовыми значениями
-        login(login, password);
+        login(User.NSI);
     }
 
     public static void loginIfNeeded() {
-        if (isLoggedIn) return;
-        isLoggedIn = true;
-        login();
+        loginIfNeeded(User.NSI);
     }
 
     public static void loginIfNeeded(String login, String password) {
-        if (isLoggedIn) return;
-        isLoggedIn = true;
-        login(login, password);
+        loginIfNeeded(new User(login, password));
     }
 
     public static void loginIfNeeded(User user) {
-        if (isLoggedIn) return;
-        isLoggedIn = true;
+        if (user.equals(currentUser)) return;
         login(user);
+    }
+
+    /** Перейти на главную страницу и нажать кнопку "Выход" */ // TODO если на выходе появится data-testid можно не ходить на главную
+    public static void logout() {
+        open(PageMain.class).clickLogout();
+        currentUser = null;
     }
 }

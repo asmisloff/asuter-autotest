@@ -45,6 +45,10 @@ public class PageDirectNetworkList extends BasePage<PageDirectNetworkList> {
     @FindBy(xpath = "/html/body/div/div[2]/div[2]/div/p")
     @As("Текст в модальном окне подтверждения")
     public SelenideElement textWindowConfirmModal;
+
+    @FindBy(xpath = "/html/body/div/div[2]/div[4]/div/div/div/h3")
+    @As("Текст всплывающего окна")
+    public SelenideElement alertMessage;
     
 
     public PageDirectNetwork clickCreate() {
