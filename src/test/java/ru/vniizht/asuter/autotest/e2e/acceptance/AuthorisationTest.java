@@ -27,6 +27,7 @@ public class AuthorisationTest extends BaseTest {
     @DisplayName("Вход под логином и паролем действующего пользователя")
     @QaseId(37)
     void validLoginAndPassword(String login, String password) {
+        logoutIfNeeded();
         PageMain pageMain = open(PageLogin.class)
                 .enterUsername(login)
                 .enterPassword(password)

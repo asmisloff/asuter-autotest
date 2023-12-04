@@ -92,6 +92,7 @@ public class ValidationVisualTest extends BaseTest {
             "9 9:Должно быть не более 20"
     }, delimiter = ':')
     public void invalidColorBackgroundFeederQuantity(String value, String message) {
+        var actualMessage = " " + message; // не подтягивает пробелы из @CsvSource
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
@@ -99,7 +100,7 @@ public class ValidationVisualTest extends BaseTest {
                 .pressTab()
                 .check(p -> {
                     p.inputFeederQuantity.parent().shouldHave(cssValue("background-color", Color.INVALID_INPUT.rgbaValue));
-                    p.inputFeederQuantity.shouldHave(attribute("title", message));
+                    p.inputFeederQuantity.shouldHave(attribute("title", actualMessage));
                 });
     }
 
@@ -117,6 +118,7 @@ public class ValidationVisualTest extends BaseTest {
             "9 9:Должно быть не более 20"
     }, delimiter = ':')
     public void invalidColorBackgroundTrackQuantity(String value, String message) {
+        var actualMessage = " " + message; // не подтягивает пробелы из @CsvSource
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
@@ -124,7 +126,7 @@ public class ValidationVisualTest extends BaseTest {
                 .pressTab()
                 .check(p -> {
                     p.inputTrackQuantity.parent().shouldHave(cssValue("background-color", Color.INVALID_INPUT.rgbaValue));
-                    p.inputTrackQuantity.shouldHave(attribute("title", message));
+                    p.inputTrackQuantity.shouldHave(attribute("title", actualMessage));
                 });
     }
 
@@ -144,6 +146,7 @@ public class ValidationVisualTest extends BaseTest {
             "9 9:Должно быть не более 20"
     }, delimiter = ':')
     public void invalidColorBackgroundFeederTractiveNetworkQuantity(String value, String message) {
+        var actualMessage = " " + message; // не подтягивает пробелы из @CsvSource
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
@@ -152,7 +155,7 @@ public class ValidationVisualTest extends BaseTest {
                 .pressTab()
                 .check(p -> {
                     p.inputFeederQuantity.parent().shouldHave(cssValue("background-color", Color.INVALID_INPUT.rgbaValue));
-                    p.inputFeederQuantity.shouldHave(attribute("title", message));
+                    p.inputFeederQuantity.shouldHave(attribute("title", actualMessage));
                 });
     }
 
@@ -172,6 +175,7 @@ public class ValidationVisualTest extends BaseTest {
             "9 9:Должно быть не более 20"
     }, delimiter = ':')
     public void invalidColorBackgroundContactWireTractiveNetworkQuantity(String value, String message) {
+        var actualMessage = " " + message; // не подтягивает пробелы из @CsvSource
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
@@ -180,7 +184,7 @@ public class ValidationVisualTest extends BaseTest {
                 .pressTab()
                 .check(p -> {
                     p.inputContactWireQuantity.parent().shouldHave(cssValue("background-color", Color.INVALID_INPUT.rgbaValue));
-                    p.inputContactWireQuantity.shouldHave(attribute("title", message));
+                    p.inputContactWireQuantity.shouldHave(attribute("title", actualMessage));
                 });
     }
 
@@ -198,6 +202,7 @@ public class ValidationVisualTest extends BaseTest {
             "9 9:Должно быть не более 20"
     }, delimiter = ':')
     public void invalidColorBackgroundPowerWireTractiveNetworkQuantity(String value, String message) {
+        var actualMessage = " " + message; // не подтягивает пробелы из @CsvSource
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
@@ -206,7 +211,7 @@ public class ValidationVisualTest extends BaseTest {
                 .pressTab()
                 .check(p -> {
                     p.inputPowerWireQuantity.parent().shouldHave(cssValue("background-color", Color.INVALID_INPUT.rgbaValue));
-                    p.inputPowerWireQuantity.shouldHave(attribute("title", message));
+                    p.inputPowerWireQuantity.shouldHave(attribute("title", actualMessage));
                 });
     }
 
@@ -226,6 +231,7 @@ public class ValidationVisualTest extends BaseTest {
             "9 9:Должно быть не более 20"
     }, delimiter = ':')
     public void invalidColorBackgroundTrackTractiveNetworkQuantity(String value, String message) {
+        var actualMessage = " " + message; // не подтягивает пробелы из @CsvSource
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
@@ -234,7 +240,7 @@ public class ValidationVisualTest extends BaseTest {
                 .pressTab()
                 .check(p -> {
                     p.inputTrackQuantity.parent().shouldHave(cssValue("background-color", Color.INVALID_INPUT.rgbaValue));
-                    p.inputTrackQuantity.shouldHave(attribute("title", message));
+                    p.inputTrackQuantity.shouldHave(attribute("title", actualMessage));
                 });
     }
 

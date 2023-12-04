@@ -78,4 +78,8 @@ public class BaseTest {
         open(PageMain.class).clickLogout();
         currentUser = null;
     }
+
+    public static void logoutIfNeeded() {
+        if (currentUser != null) logout();
+    }
 }
