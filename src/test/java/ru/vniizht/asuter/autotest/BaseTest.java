@@ -69,6 +69,7 @@ public class BaseTest {
 
     public static void loginIfNeeded(User user) {
         if (user.equals(currentUser)) return;
+        if (currentUser != null) logout();
         login(user);
     }
 
