@@ -672,6 +672,7 @@ public class TransitionsAndStatesTest extends BaseTest {
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
+                .switchToTractionNetwork()
                 .inputContactWireQuantity(value)
                 .pressTab()
                 .check(p -> p.inputContactWireQuantity.shouldHave(value(value)))
@@ -689,6 +690,7 @@ public class TransitionsAndStatesTest extends BaseTest {
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
+                .switchToTractionNetwork()
                 .inputPowerWireQuantity(value)
                 .pressTab()
                 .check(p -> p.inputPowerWireQuantity.shouldHave(value(value)))
@@ -706,6 +708,7 @@ public class TransitionsAndStatesTest extends BaseTest {
         loginIfNeeded();
         open(PageDirectNetworkList.class)
                 .clickCreate()
+                .switchToTractionNetwork()
                 .inputTrackQuantity(value)
                 .pressTab()
                 .check(p -> p.inputTrackQuantity.shouldHave(value(value)))
