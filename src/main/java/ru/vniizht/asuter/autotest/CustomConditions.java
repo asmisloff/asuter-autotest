@@ -26,6 +26,13 @@ public class CustomConditions {
         };
     }
 
+    public static Condition[] validEmptyInput() {
+        return new Condition[]{
+                new OuterDivIsWhite(),
+                Condition.empty
+        };
+    }
+
     public static Condition[] invalidInput(String expectedValue, String expectedTitle) {
         return new Condition[]{
             new OuterDivIsPink(),
@@ -38,6 +45,14 @@ public class CustomConditions {
         return new Condition[]{
             new OuterDivIsPink(),
             Condition.value(expectedValue)
+        };
+    }
+
+    public static Condition[] invalidEmptyInput(String expectedTitle) {
+        return new Condition[]{
+                new OuterDivIsPink(),
+                Condition.empty,
+                Condition.attribute("title", expectedTitle)
         };
     }
 
