@@ -4,6 +4,7 @@ import com.codeborne.selenide.CheckResult;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Driver;
 import com.codeborne.selenide.SelenideElement;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -18,6 +19,9 @@ import static com.codeborne.selenide.Selenide.$;
 
 @ParametersAreNonnullByDefault
 public class CustomConditions {
+
+    public final static String MINUS_SIGN = "\u2212";
+    public static final String INPUT_NOT_VALID_CLASS_PATTERN = ".*inputNotValidField.*";
 
     public static Condition[] validInput(String expectedValue) {
         return new Condition[]{
@@ -50,10 +54,47 @@ public class CustomConditions {
 
     public static Condition[] invalidEmptyInput(String expectedTitle) {
         return new Condition[]{
-                new OuterDivIsPink(),
+                classInputNotValid(),
                 Condition.empty,
                 Condition.attribute("title", expectedTitle)
         };
+    }
+
+    public static Condition[] classInputNotValid(String expectedValue, String expectedTitle) {
+        return new Condition[]{
+                classInputNotValid(),
+                clearedValueMatch(expectedValue),
+                Condition.attribute("title", expectedTitle)
+        };
+    }
+
+    public static Condition[] classInputValid(String expectedValue) {
+        return new Condition[]{
+                Condition.not(classInputNotValid()),
+                clearedValueMatch(expectedValue),
+        };
+    }
+
+    public static Condition classInputNotValid() {
+        return Condition.attributeMatching("class", INPUT_NOT_VALID_CLASS_PATTERN);
+    }
+
+    /**
+     * Перед сравнением с ожидаемым значением очищает значение элемента (аттрибут value)
+     * от non-breaking space и заменяет символ минуса (Unicode 0x2212) на обычный минус.
+     * @param expectedValue ожидаемое значение
+     */
+    public static Condition clearedValueMatch(String expectedValue) {
+        return Condition.match("should have value " + expectedValue ,
+                webElement -> {
+                    String value = webElement.getAttribute("value");
+                    if (value.startsWith(MINUS_SIGN)) {
+                        value = value.replace(MINUS_SIGN.charAt(0), '-');
+                    }
+                    value = StringUtils.remove(value, ' ');
+                    return expectedValue.equals(value);
+                }
+        );
     }
 
     public static void notificationShouldAppear(String text) {

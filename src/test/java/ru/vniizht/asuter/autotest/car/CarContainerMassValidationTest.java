@@ -7,13 +7,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.vniizht.asuter.autotest.BaseTest;
-import ru.vniizht.asuter.autotest.Messages;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCar;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;
 
 import static ru.vniizht.asuter.autotest.CustomConditions.*;
-import static ru.vniizht.asuter.autotest.CustomConditions.invalidInput;
-import static ru.vniizht.asuter.autotest.CustomConditions.validInput;
 import static ru.vniizht.asuter.autotest.Messages.*;
 
 /**
@@ -41,8 +38,8 @@ public class CarContainerMassValidationTest extends BaseTest {
         page.inputContainerMass(value)
                 .pressTab()
                 .check(p -> {
-                    p.containerMassInput.shouldHave(validInput(expected));
-                    p.fullMassInput.shouldHave(validInput(expected));
+                    p.containerMassInput.shouldHave(classInputValid(expected));
+                    p.fullMassInput.shouldHave(classInputValid(expected));
                 });
     }
 
@@ -84,16 +81,15 @@ public class CarContainerMassValidationTest extends BaseTest {
         page.inputContainerMass(v)
                 .pressTab()
                 .check(p -> {
-                    p.containerMassInput.shouldHave(invalidInput(expected, numberOutOfRangeV2(1, 10_000, 3)));
-                    p.fullMassInput.shouldHave(invalidInput(expected, numberOutOfRangeV2(1, 10_000, 3)));
-                    p.massPerAxleInput.shouldHave(invalidInput(p.calculateMassPerAxle(), Messages.numberOutOfRangeV2(1, 100, 3)));
-                    // todo: в приложении НЕ ВЫПОЛНЯЕТСЯ УСЛОВИЕ "Возможность сохранить форму недоступна."
+                    p.containerMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
+                    p.fullMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
+                    p.massPerAxleInput.shouldHave(classInputNotValid(p.calculateMassPerAxle(), MUST_BE_FROM_1_TO_100));
                 });
     }
 
     @ParameterizedTest
     @CsvSource(
-            value = {"0:", "0.001+100000000000000:0,0011", "0.00 1:0,001"},
+            value = {"0:0", "0.001+100000000000000:0,0011", "0.00 1:0,001"},
             delimiter = ':'
     )
     @DisplayName("Невалидный ввод с автокоррекцией (масса на ось -> 0), пп. 2, 10, 11")
@@ -102,23 +98,22 @@ public class CarContainerMassValidationTest extends BaseTest {
         page.inputContainerMass(v)
                 .pressTab()
                 .check(p -> {
-                    String mustBeFrom1to10000 = numberOutOfRangeV2(1, 10_000, 3);
-                    p.containerMassInput.shouldHave(invalidInput(expected, mustBeFrom1to10000));
-                    p.fullMassInput.shouldHave(invalidInput(expected, mustBeFrom1to10000));
+                    p.containerMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
+                    p.fullMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
                     // При текущих входных данных massPerAxle вычисляется в 0 и это не приводит к нарушению валидации
                     p.massPerAxleInput.shouldHave(validInput(p.calculateMassPerAxle()));
-                    // todo: в приложении НЕ ВЫПОЛНЯЕТСЯ УСЛОВИЕ "Возможность сохранить форму недоступна."
                 });
     }
 
     @Test
     @DisplayName("Невалидный ввод (отрицательный), пп. 7")
     public void testInputInvalidNegativeValues() {
+        var negative1000 = "-1000";
         page.inputContainerMass("-1000")
                 .pressTab()
                 .check(p -> {
-                    p.containerMassInput.shouldHave(invalidInput("-1000", ValueMustBePositive));
-                    p.fullMassInput.shouldHave(invalidInput("-1000", ValueMustBePositive));
+                    p.containerMassInput.shouldHave(classInputNotValid(negative1000, MUST_BE_FROM_1_TO_10000));
+                    p.fullMassInput.shouldHave(classInputNotValid(negative1000, MUST_BE_FROM_1_TO_10000));
                 });
     }
 }

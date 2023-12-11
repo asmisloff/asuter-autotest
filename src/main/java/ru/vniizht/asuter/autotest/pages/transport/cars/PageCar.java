@@ -21,7 +21,7 @@ public class PageCar extends BasePage<PageCar> {
     @As("Поле \"Масса тары\"")
     public SelenideElement containerMassInput;
 
-    @FindBy(xpath = "//input[@data-name='weight']")
+    @FindBy(xpath = "//input[@data-testid='weight']")
     @As("Поле \"Масса брутто\"")
     public SelenideElement fullMassInput;
 
@@ -29,7 +29,7 @@ public class PageCar extends BasePage<PageCar> {
     @As("Поле \"Масса нетто\"")
     public SelenideElement netMassInput;
 
-    @FindBy(xpath = "//input[@data-name='singleAxleWeight']")
+    @FindBy(xpath = "//input[@data-testid='singleAxleWeight']")
     @As("Поле \"Масса на ось\"")
     public SelenideElement massPerAxleInput;
 
@@ -78,7 +78,7 @@ public class PageCar extends BasePage<PageCar> {
         if (fullWeight.isBlank()) {
             return "";
         }
-        double w = Double.parseDouble(fullWeight.replace(',', '.'));
+        double w = Double.parseDouble(fullWeight.replace(',', '.').replace(" ", ""));
         int n = Integer.parseInt(numberOfAxles);
         return StringUtils.remove(tr(w / n, 3), ' ');
     }

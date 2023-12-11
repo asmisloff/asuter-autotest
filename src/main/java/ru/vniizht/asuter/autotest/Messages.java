@@ -3,14 +3,11 @@ package ru.vniizht.asuter.autotest;
 public class Messages {
 
 
-    public static final String FieldIsRequired =
-            // todo: Решить проблему с пробелом перед текстом сообщения, сейчас он добавляется чтобы тест не падал
-            " " +
-            "Поле, обязательное для заполнения";
-    public static final String ValueMustBePositive =
-            // todo: Решить проблему с пробелом перед текстом сообщения, сейчас он добавляется чтобы тест не падал
-            " " +
-                    "Должно быть положительным";
+    public static final String FieldIsRequired = "Поле, обязательное для заполнения";
+
+    public static String MUST_BE_FROM_1_TO_10000 = numberOutOfRangeV2(1, 10_000, 3);
+
+    public final static String MUST_BE_FROM_1_TO_100 = numberOutOfRangeV2(1, 100, 3);
 
     public static String numberOutOfRange(Number min, Number max, int precision) {
         return String.format(
@@ -22,8 +19,6 @@ public class Messages {
     // todo: Rename после удаления старого кода использующего старый вариант numberOutOfRange()
     public static String numberOutOfRangeV2(Number min, Number max, int precision) {
         return String.format(
-                // todo: Решить проблему с пробелом перед текстом сообщения, сейчас он добавляется чтобы тест не падал
-                " " +
                 "Значение должно находиться в пределах %s...%s; не более %d знаков после запятой",
                 min.toString(), max.toString(), precision
         );

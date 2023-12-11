@@ -16,8 +16,7 @@ import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;
 
 import java.util.stream.Stream;
 
-import static ru.vniizht.asuter.autotest.CustomConditions.invalidInput;
-import static ru.vniizht.asuter.autotest.CustomConditions.validInput;
+import static ru.vniizht.asuter.autotest.CustomConditions.*;
 
 /**
  * Раздел "Вагоны", поле "Наименование вагона".
@@ -66,8 +65,7 @@ public class CarNameValidationTest extends BaseTest {
         page.inputName(v)
                 .pressTab()
                 .check(p -> {
-                    p.nameInput.shouldHave(invalidInput(v, Messages.FieldIsRequired));
-                    // todo: в приложении НЕ ВЫПОЛНЯЕТСЯ УСЛОВИЕ "Возможность сохранить форму недоступна."
+                    p.nameInput.shouldHave(classInputNotValid("", Messages.FieldIsRequired));
                 });
     }
 
@@ -82,8 +80,8 @@ public class CarNameValidationTest extends BaseTest {
                 valid("%истерна"),
                 valid("-1000"),
                 validButTrimmed("   Цистерна  ", "Цистерна"),
-                invalid("  "),
-                invalid("")
+                invalid("  ", ""),
+                invalid("", "")
         );
     }
 
@@ -112,7 +110,7 @@ public class CarNameValidationTest extends BaseTest {
         return Arguments.of(v, validInput(expected));
     }
 
-    private static Arguments invalid(String v) {
-        return Arguments.of(v, invalidInput(v, Messages.FieldIsRequired));
+    private static Arguments invalid(String v, String expectedValue) {
+        return Arguments.of(v, classInputNotValid(expectedValue, Messages.FieldIsRequired));
     }
 }

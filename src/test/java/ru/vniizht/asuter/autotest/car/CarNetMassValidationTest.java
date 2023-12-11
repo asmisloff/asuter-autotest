@@ -39,8 +39,8 @@ public class CarNetMassValidationTest extends BaseTest {
         page.inputNetMass(value)
                 .pressTab()
                 .check(p -> {
-                    p.netMassInput.shouldHave(validInput(expected));
-                    p.fullMassInput.shouldHave(validInput(expected));
+                    p.netMassInput.shouldHave(classInputValid(expected));
+                    p.fullMassInput.shouldHave(classInputValid(expected));
                 });
     }
 
@@ -55,10 +55,10 @@ public class CarNetMassValidationTest extends BaseTest {
                 .inputNetMass(value)
                 .pressTab()
                 .check(p -> {
-                    p.netMassInput.shouldHave(validInput(expected));
-                    p.fullMassInput.shouldHave(validInput(expected));
+                    p.netMassInput.shouldHave(classInputValid(expected));
+                    p.fullMassInput.shouldHave(classInputValid(expected));
                     var expectedMassPerAxle = p.calculateMassPerAxleFromExpectedWeight(expected);
-                    p.massPerAxleInput.shouldHave(validInput(expectedMassPerAxle));
+                    p.massPerAxleInput.shouldHave(classInputValid(expectedMassPerAxle));
                 });
     }
 
@@ -69,7 +69,7 @@ public class CarNetMassValidationTest extends BaseTest {
         page.inputNetMass(value)
                 .pressTab()
                 .check(p -> {
-                    p.netMassInput.shouldHave(invalidInput("", FieldIsRequired));
+                    p.netMassInput.shouldHave(classInputNotValid("", FieldIsRequired));
                     p.fullMassInput.shouldHave(validEmptyInput());
                     p.massPerAxleInput.shouldBe(validEmptyInput());
                 });
@@ -86,8 +86,8 @@ public class CarNetMassValidationTest extends BaseTest {
                 .pressTab()
                 .check(p -> {
                     var mustBeFrom1to10000 = numberOutOfRangeV2(1, 10_000, 3);
-                    p.netMassInput.shouldHave(invalidInput(expected, mustBeFrom1to10000));
-                    p.fullMassInput.shouldHave(invalidInput(expected, mustBeFrom1to10000));
+                    p.netMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
+                    p.fullMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
                 });
     }
 
@@ -101,8 +101,8 @@ public class CarNetMassValidationTest extends BaseTest {
         page.inputNetMass(value)
                 .pressTab()
                 .check(p -> {
-                    p.netMassInput.shouldHave(invalidInput(expected, ValueMustBePositive));
-                    p.fullMassInput.shouldHave(invalidInput(expected, ValueMustBePositive));
+                    p.netMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
+                    p.fullMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
                 });
     }
 }
