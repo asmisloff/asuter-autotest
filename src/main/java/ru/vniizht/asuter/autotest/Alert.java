@@ -48,4 +48,11 @@ public record Alert(SelenideElement modal, SelenideElement h3, SelenideElement c
         h3.shouldHave(text(expected), Duration.ofSeconds(10));
         return this;
     }
+
+    public static void shouldDisplayNotAllEnteredCorrectly() {
+        Alert.find()
+                .shouldBeVisible()
+                .shouldHaveText("Не все данные введены корректно.")
+                .closeAndCheckIfClosed();
+    }
 }

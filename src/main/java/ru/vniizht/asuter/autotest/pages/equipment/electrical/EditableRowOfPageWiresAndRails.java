@@ -1,10 +1,11 @@
 package ru.vniizht.asuter.autotest.pages.equipment.electrical;
 
-import org.openqa.selenium.WebElement;
+import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 import ru.vniizht.asuter.autotest.constants.WireMaterial;
 
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 
 public class EditableRowOfPageWiresAndRails {
 
@@ -14,17 +15,17 @@ public class EditableRowOfPageWiresAndRails {
     private final int rowIndex;
 
 
-    public WebElement inputName;
-    public WebElement inputDcResistance;
-    public WebElement inputAcResistance;
-    public WebElement inputRadius;
-    public WebElement inputLimitAmperage;
-    public WebElement inputLimitTemperature;
-    public WebElement inputThermalCapacity;
-    public WebElement inputCrossSectionArea;
+    public SelenideElement inputName;
+    public SelenideElement inputDcResistance;
+    public SelenideElement inputAcResistance;
+    public SelenideElement inputRadius;
+    public SelenideElement inputLimitAmperage;
+    public SelenideElement inputLimitTemperature;
+    public SelenideElement inputThermalCapacity;
+    public SelenideElement inputCrossSectionArea;
     public Select dropdownMaterial;
-    public WebElement buttonAdd;
-    public WebElement buttonRemove;
+    public SelenideElement buttonAdd;
+    public SelenideElement buttonRemove;
 
 
     public EditableRowOfPageWiresAndRails(PageWiresAndRails page, int rowIndex) {
@@ -41,6 +42,13 @@ public class EditableRowOfPageWiresAndRails {
         dropdownMaterial = new Select($x(xpathStart + rowIndex + "]//select[contains(@data-testid, 'material')]"));
         buttonAdd = $x(xpathStart + rowIndex + "]//button[contains(@data-testid, 'addBtn')]");
         buttonRemove = $x(xpathStart + rowIndex + "]//button[contains(@data-testid, 'delBtn')]");
+    }
+
+    /**
+     * Возвращает последний ряд из коллекции строк проводов и рельсов.
+     */
+    public EditableRowOfPageWiresAndRails(PageWiresAndRails page) {
+        this(page, $$x("//tr").size() - 1);
     }
 
     /** Страница, в которой выбрана эта строка */
@@ -74,6 +82,11 @@ public class EditableRowOfPageWiresAndRails {
     public PageWiresAndRails clickRemove() {
         buttonRemove.click();
         return page;
+    }
+
+    public EditableRowOfPageWiresAndRails pressTab() {
+        page.pressTab();
+        return this;
     }
 
     /** Марка */
@@ -171,4 +184,9 @@ public class EditableRowOfPageWiresAndRails {
         dropdownMaterial.selectByVisibleText(value == null ? "" : value.displayedText);
         return this;
     }
+
+    public static SelenideElement findInputNameByValue(String value) {
+        return $(By.xpath(String.format("//tbody/tr/td/div/input[contains(@data-testid, 'text')][@value='%s']", value)));
+    }
+
 }

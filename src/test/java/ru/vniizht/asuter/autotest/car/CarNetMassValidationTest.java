@@ -9,7 +9,6 @@ import ru.vniizht.asuter.autotest.BaseTest;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCar;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;
 
-import static com.codeborne.selenide.Condition.*;
 import static ru.vniizht.asuter.autotest.CustomConditions.*;
 import static ru.vniizht.asuter.autotest.Messages.*;
 
@@ -85,7 +84,6 @@ public class CarNetMassValidationTest extends BaseTest {
         page.inputNetMass(value)
                 .pressTab()
                 .check(p -> {
-                    var mustBeFrom1to10000 = numberOutOfRangeV2(1, 10_000, 3);
                     p.netMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
                     p.fullMassInput.shouldHave(classInputNotValid(expected, MUST_BE_FROM_1_TO_10000));
                 });
