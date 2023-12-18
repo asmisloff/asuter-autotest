@@ -51,6 +51,12 @@ public class LocomotiveElectricalPositionRow extends BasePage<LocomotiveElectric
         return this;
     }
 
+    /** Используется для выбора позиции характеристик */
+    public LocomotiveElectricalPositionRow activatePositionRow() {
+        clickToEnableNameInput();
+        return this;
+    }
+
     /** Убирает с поля ввода имени атрибут 'disabled' чтобы иметь возможность впечатывать текст в авто-тесте. */
     public LocomotiveElectricalPositionRow clickToEnableNameInput() {
         nameInput.parent().click();
