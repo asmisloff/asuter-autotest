@@ -1,6 +1,5 @@
 package ru.vniizht.asuter.autotest.pages;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
@@ -8,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import ru.vniizht.asuter.autotest.constants.Execution;
 import ru.vniizht.asuter.autotest.utils.UrlDeterminator;
 
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -74,5 +72,10 @@ public class BasePage<P extends BasePage<P>> {
             }
         }
         return (P) this;
+    }
+
+    public static void typeIn(SelenideElement element, String value) {
+        element.clear();
+        element.sendKeys(value);
     }
 }
