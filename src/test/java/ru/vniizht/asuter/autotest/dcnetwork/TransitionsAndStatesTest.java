@@ -379,10 +379,10 @@ public class TransitionsAndStatesTest extends BaseTest {
                 .switchToTractionNetwork()
                 .inputTrackQuantity(invalidValue)
                 .pressTab()
-                .check(p -> element(p.dropdownMenuTrackMark.getWrappedElement()).shouldBe(disabled))
+                .check(p -> element(p.dropdownMenuTrackMark.getWrappedElement()).shouldBe(disabled.because("введено невалидное значение \"" + invalidValue + "\"")))
                 .inputTrackQuantity(invalidValue)
                 .pressTab()
-                .check(p -> element(p.dropdownMenuTrackMark.getWrappedElement()).shouldBe(disabled));
+                .check(p -> element(p.dropdownMenuTrackMark.getWrappedElement()).shouldBe(disabled.because("введено невалидное значение \"" + invalidValue + "\"")));
     }
 
 
@@ -454,21 +454,6 @@ public class TransitionsAndStatesTest extends BaseTest {
                     // кнопка "Создать на основе текущей" активна
                     p.buttonCopy.shouldBe(enabled);
                 });
-    }
-
-
-    @Test
-    @QaseId(161)
-    @DisplayName("Cтраница создания остается в режиме редактирования при попытке сохранения с невалидными данными")
-    public void editableAfterUnSuccessFullSave() {
-        loginIfNeeded();
-        open(PageDirectNetworkList.class)
-                .clickCreate()
-                .clickCalculate()
-                .clickCloseAlert()
-                .clickSave()
-                .clickCloseAlert()
-                .check(p -> p.inputFeederQuantity.shouldBe(enabled));
     }
 
 
@@ -615,7 +600,7 @@ public class TransitionsAndStatesTest extends BaseTest {
     @ParameterizedTest
     @QaseId(204)
     @DisplayName("Значения не изменяются при снятии фокуса с поля ввода \"Количество\" питающего провода")
-    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9"})
+    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9", "99999999999999999"})
     public void feederQuantityInputDoesNotChange(String value) {
         loginIfNeeded();
         open(PageDirectNetworkList.class)
@@ -632,7 +617,7 @@ public class TransitionsAndStatesTest extends BaseTest {
     @ParameterizedTest
     @QaseId(205)
     @DisplayName("Значения не изменяются при снятии фокуса с поля ввода \"Количество\" у пути питающей линии")
-    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9"})
+    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9", "99999999999999999"})
     public void trackQuantityInputDoesNotChange(String value) {
         loginIfNeeded();
         open(PageDirectNetworkList.class)
@@ -649,7 +634,7 @@ public class TransitionsAndStatesTest extends BaseTest {
     @ParameterizedTest
     @QaseId(206)
     @DisplayName("Значения не изменяются при снятии фокуса с поля ввода \"Количество\" несущего провода тяговой сети")
-    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9"})
+    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9", "99999999999999999"})
     public void supportWireQuantityInputDoesNotChange(String value) {
         loginIfNeeded();
         open(PageDirectNetworkList.class)
@@ -667,7 +652,7 @@ public class TransitionsAndStatesTest extends BaseTest {
     @ParameterizedTest
     @QaseId(207)
     @DisplayName("Значения не изменяются при снятии фокуса с поля ввода \"Количество\" контактного провода тяговой сети")
-    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9"})
+    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9", "99999999999999999"})
     public void contactWireQuantityInputDoesNotChange(String value) {
         loginIfNeeded();
         open(PageDirectNetworkList.class)
@@ -685,7 +670,7 @@ public class TransitionsAndStatesTest extends BaseTest {
     @ParameterizedTest
     @QaseId(208)
     @DisplayName("Значения не изменяются при снятии фокуса с поля ввода \"Количество\" усиливающего провода тяговой сети")
-    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9"})
+    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9", "99999999999999999"})
     public void powerWireQuantityInputDoesNotChange(String value) {
         loginIfNeeded();
         open(PageDirectNetworkList.class)
@@ -703,7 +688,7 @@ public class TransitionsAndStatesTest extends BaseTest {
     @ParameterizedTest
     @QaseId(209)
     @DisplayName("Значения не изменяются при снятии фокуса с поля ввода \"Количество\" у пути тяговой сети")
-    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9"})
+    @ValueSource(strings = {"0,0000000001", "0,1", "0,56", "99,999", "9", "99999999999999999"})
     public void trackQuantityTractionNetworkInputDoesNotChange(String value) {
         loginIfNeeded();
         open(PageDirectNetworkList.class)

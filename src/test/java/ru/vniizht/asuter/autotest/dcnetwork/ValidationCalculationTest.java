@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import ru.vniizht.asuter.autotest.BaseTest;
 import ru.vniizht.asuter.autotest.pages.equipment.electrical.PageDirectNetworkList;
 
-import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.disabled;
 
 @DisplayName("Валидация при нажатии на кнопку Рассчитать")
 public class ValidationCalculationTest extends BaseTest {
@@ -23,10 +23,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .clickCreate()
                 .waitTime()
                 .inputFeederWireQuantity(invalidValue)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @ParameterizedTest
@@ -40,10 +38,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstFeeder()
                 .waitTime()
                 .inputTrackQuantity(invalidValue)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @ParameterizedTest
@@ -65,10 +61,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstPowerWire()
                 .selectFirstTrack()
                 .inputFeederWireQuantity(invalidValue)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @ParameterizedTest
@@ -90,10 +84,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstPowerWire()
                 .selectFirstTrack()
                 .inputContactWireQuantity(invalidValue)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @ParameterizedTest
@@ -115,10 +107,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstPowerWire()
                 .selectFirstTrack()
                 .inputPowerWireQuantity(invalidValue)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @ParameterizedTest
@@ -140,10 +130,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstPowerWire()
                 .selectFirstTrack()
                 .inputTrackQuantity(invalidValue)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @Test
@@ -154,10 +142,7 @@ public class ValidationCalculationTest extends BaseTest {
         open(PageDirectNetworkList.class)
                 .clickCreate()
                 .waitTime()
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @Test
@@ -170,10 +155,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .waitTime()
                 .selectFirstFeeder()
                 .inputTrackQuantity(1)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @Test
@@ -194,10 +177,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstPowerWire()
                 .selectFirstTrack()
                 .selectFeederByName(null)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @Test
@@ -218,10 +199,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstPowerWire()
                 .selectFirstTrack()
                 .selectContactWireByName(null)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @Test
@@ -242,10 +221,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstPowerWire()
                 .selectFirstTrack()
                 .selectPowerWireByName(null)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
     @Test
@@ -266,10 +243,8 @@ public class ValidationCalculationTest extends BaseTest {
                 .selectFirstPowerWire()
                 .selectFirstTrack()
                 .selectTrackByName(null)
-                .clickCalculate()
-                .waitTime()
-                .check(p -> p.alertMessage.shouldHave(exactText("Не все данные введены корректно.")))
-                .clickCloseAlert();
+                .pressTab()
+                .check(p -> p.buttonCalculate.shouldBe(disabled));
     }
 
 
