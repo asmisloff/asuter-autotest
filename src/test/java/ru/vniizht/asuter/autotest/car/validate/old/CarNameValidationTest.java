@@ -1,4 +1,4 @@
-package ru.vniizht.asuter.autotest.car;
+package ru.vniizht.asuter.autotest.car.validate.old;
 
 import com.codeborne.selenide.Condition;
 import io.qase.api.annotation.QaseId;

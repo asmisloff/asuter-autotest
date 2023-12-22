@@ -1,4 +1,4 @@
-package ru.vniizht.asuter.autotest.car;
+package ru.vniizht.asuter.autotest.car.validate.old;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
