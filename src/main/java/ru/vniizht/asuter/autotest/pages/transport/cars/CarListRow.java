@@ -2,10 +2,11 @@ package ru.vniizht.asuter.autotest.pages.transport.cars;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import ru.vniizht.asuter.autotest.pages.BasePage;
 
 import static com.codeborne.selenide.Selenide.$x;
 
-public class CarListRow {
+public class CarListRow extends BasePage<CarListRow> {
     private static final String xpathTrStart = "//*[@id=\"rootContainer\"]/div/table/tbody/tr";
     private static final String xpathStart = xpathTrStart + "[";
 

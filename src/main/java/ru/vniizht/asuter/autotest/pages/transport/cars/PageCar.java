@@ -86,6 +86,14 @@ public class PageCar extends BasePage<PageCar> {
     @As("Поле \"Коэффициент D бесстыкового пути\"")
     public SelenideElement continuousRailDInput;
 
+    @FindBy(xpath = "//div[@id=\"openModal\"][2]/div/div/div/h3")
+    @As("Текст модального окна сообщения \"Запрос отклонен\"")
+    public SelenideElement alertModalHeader;
+
+    @FindBy(xpath = "//div[@id=\"openModal\"][2]/div/div/div/button")
+    @As("Кнопка закрытия модального окна сообщения \"Запрос отклонен\"")
+    public SelenideElement alertModalCloseButton;
+
     /** Ввести наименование вагона */
     public PageCar inputName(String value) {
         nameInput.clear();

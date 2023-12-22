@@ -1,11 +1,9 @@
 package ru.vniizht.asuter.autotest.car.save;
 
 import io.qase.api.annotation.QaseId;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.vniizht.asuter.autotest.BaseTest;
 import ru.vniizht.asuter.autotest.car.Car;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCar;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;
@@ -15,12 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static ru.vniizht.asuter.autotest.CustomConditions.validInput;
 
 @DisplayName("Вагоны: Сохранение")
-public class CarSaveTest extends BaseTest {
-    private static final String CAR_NAME = "car_save_autotest";
+public class CarSaveTest extends CarBaseTest {
     private static final String CONTAINER_MASS_FOR_Q_EQUALS_6 = "24";
-    private static final String CONTAINER_MASS_FOR_Q_GREATER_6 = "50";
     private static final String CONTAINER_MASS_FOR_Q_LESS_6 = "10";
-    private static final String VALID_LENGTH = "1";
     private static final String DEFAULT_NUMBER_OF_AXLES = "4";
     private static final String EXPECTED_MASS_PER_AXLE_EQUALS_6 = "6";
     private static final String EXPECTED_MASS_PER_AXLE_GREATER_6 = "12,5";
@@ -534,14 +529,6 @@ public class CarSaveTest extends BaseTest {
         );
 
         deleteCarByName(modifiedCar.name());
-    }
-
-    private void deleteCarByName(String name) {
-        loginIfNeeded();
-        open(PageCarsList.class)
-                .waitTableLoading()
-                .findCarRowByName(name)
-                .delete();
     }
 
     private Car inputCar(String containerMass, String[] coefficients) {
