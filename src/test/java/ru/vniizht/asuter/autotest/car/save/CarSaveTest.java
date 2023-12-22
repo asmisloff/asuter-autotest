@@ -59,6 +59,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -86,6 +88,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -122,6 +126,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.setComponentRailA(EMPTY_A).checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -158,13 +164,14 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.setComponentRailA(EMPTY_A).checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
     @QaseId(266)
     @DisplayName("Сохранение вагона при q > 6 с заполненным коэффициентом А звеньевого пути")
     public void testSavingCar_266() {
-
         Car car = inputCar(
                 CONTAINER_MASS_FOR_Q_GREATER_6,
                 new String[] {"1", "1", "1", "1", EMPTY_A, "1", "1", "1"}
@@ -186,6 +193,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.setContinuousRailA(EMPTY_A).checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -213,6 +222,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.setComponentRailA(EMPTY_A).checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -249,6 +260,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.setContinuousRailA(EMPTY_A).checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -285,6 +298,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.setComponentRailA(EMPTY_A).checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -312,6 +327,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -339,6 +356,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -375,6 +394,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.setContinuousRailA(EMPTY_A).checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -411,6 +432,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(car.length()));
                     car.setComponentRailA(EMPTY_A).checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(car.name());
     }
 
     @Test
@@ -457,6 +480,8 @@ public class CarSaveTest extends BaseTest {
                     c.lengthInput.shouldHave(validInput(modifiedCar.length()));
                     modifiedCar.checkCoefficientsEqual(c);
                 });
+
+        deleteCarByName(modifiedCar.name());
     }
 
     @Test
@@ -507,14 +532,15 @@ public class CarSaveTest extends BaseTest {
                         .clickDisplayAllPages()
                         .containsCarRowByName(oldCar.name())
         );
+
+        deleteCarByName(modifiedCar.name());
     }
 
-    @AfterAll
-    public static void tearDown() {
+    private void deleteCarByName(String name) {
         loginIfNeeded();
         open(PageCarsList.class)
                 .waitTableLoading()
-                .findCarRowByName(CAR_NAME)
+                .findCarRowByName(name)
                 .delete();
     }
 
