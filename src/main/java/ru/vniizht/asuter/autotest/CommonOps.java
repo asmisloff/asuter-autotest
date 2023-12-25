@@ -18,6 +18,7 @@ public class CommonOps {
 
     private static final Logger logger = LoggerFactory.getLogger(CommonOps.class);
     private static final NumberFormat ruNumberFmt = DecimalFormat.getNumberInstance(new Locale("ru"));
+    private static final NumberFormat enNumberFmt = DecimalFormat.getNumberInstance(Locale.ENGLISH);
 
     public static final String ROOT = "http://asuter-dev.vniizht.lan";
 
@@ -52,5 +53,10 @@ public class CommonOps {
     public static String tr(Number n, int maxFractionDigits) {
         ruNumberFmt.setMaximumFractionDigits(maxFractionDigits);
         return ruNumberFmt.format(n);
+    }
+
+    public static String trEn(Number n, int maxFractionDigits) {
+        enNumberFmt.setMaximumFractionDigits(maxFractionDigits);
+        return enNumberFmt.format(n);
     }
 }
