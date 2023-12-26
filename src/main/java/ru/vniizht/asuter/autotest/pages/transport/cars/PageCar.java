@@ -14,6 +14,10 @@ import static ru.vniizht.asuter.autotest.CommonOps.tr;
 
 public class PageCar extends BasePage<PageCar> {
 
+    @FindBy(xpath = "//div[@id=\"modalContainer\"]/div[1]/div/div[2]/div[1]/div[1]/span[3]")
+    @As("Изменяемая часть текста в заголовке страницы")
+    public SelenideElement pageHeaderText;
+
     @FindBy(xpath = "//button[@id=\"saveBtn\"][@data-testid=\"saveBtn\"]")
     @As("Кнопка \"Сохранить\"")
     public SelenideElement saveButton;
@@ -53,6 +57,14 @@ public class PageCar extends BasePage<PageCar> {
     @FindBy(xpath = "//input[@data-testid='length']")
     @As("Поле \"Длина по осям сцепления\"")
     public SelenideElement lengthInput;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div[2]/div[2]/div[1]/h2")
+    @As("Заголовок \"Формула расчёта основного удельного сопротивления движению\"")
+    public SelenideElement formulaForCalculatingResistanceHeader;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div[2]/div[2]/div[2]")
+    @As("Формула расчёта основного удельного сопротивления движению")
+    public SelenideElement formulaForCalculatingResistance;
 
     @FindBy(xpath = "//input[@data-testid='componentRailA']")
     @As("Поле \"Коэффициент А звеньевого пути\"")
@@ -94,6 +106,12 @@ public class PageCar extends BasePage<PageCar> {
     @As("Кнопка закрытия модального окна сообщения \"Запрос отклонен\"")
     public SelenideElement alertModalCloseButton;
 
+    /** Очистить наименование вагона */
+    public PageCar clearName() {
+        nameInput.clear();
+        return this;
+    }
+
     /** Ввести наименование вагона */
     public PageCar inputName(String value) {
         nameInput.clear();
@@ -131,6 +149,11 @@ public class PageCar extends BasePage<PageCar> {
     public PageCar inputLength(String value) {
         lengthInput.clear();
         lengthInput.sendKeys(value);
+        return this;
+    }
+
+    public PageCar clickFormulaForCalculatingResistanceHeader() {
+        formulaForCalculatingResistanceHeader.click();
         return this;
     }
 

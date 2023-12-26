@@ -1,4 +1,4 @@
-package ru.vniizht.asuter.autotest.car.save;
+package ru.vniizht.asuter.autotest.car;
 
 import ru.vniizht.asuter.autotest.BaseTest;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;

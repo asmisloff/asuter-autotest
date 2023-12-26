@@ -35,6 +35,10 @@ public class PageCarsList extends BasePage<PageCarsList> {
     @As("Кнопка отмены в модальном окне")
     public SelenideElement cancelModalButton;
 
+    @FindBy(xpath = "//div[@data-testid='ConfirmModal']/p")
+    @As("Текст модального окна подтверждения")
+    public SelenideElement confirmModalText;
+
     @FindBy(xpath = "//div[@id=\"modalContainer\"]/div[1]/div/div[2]/div[1]/ul[1]/ul[1]/li[2]/a[normalize-space(text())='Все']")
     @As("Кнопка отображения всех вагонов в списке")
     public SelenideElement displayAllPagesLink;
@@ -74,6 +78,10 @@ public class PageCarsList extends BasePage<PageCarsList> {
     public PageCarsList clickModalCancel() {
         cancelModalButton.click();
         return this;
+    }
+
+    public CarListRow getFirstCarRow() {
+        return new CarListRow(this, 1);
     }
 
     public CarListRow findCarRowByName(String name) {

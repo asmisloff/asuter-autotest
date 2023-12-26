@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.vniizht.asuter.autotest.car.Car;
+import ru.vniizht.asuter.autotest.car.CarBaseTest;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCar;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;
 

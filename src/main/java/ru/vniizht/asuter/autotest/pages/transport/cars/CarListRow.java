@@ -26,9 +26,15 @@ public class CarListRow extends BasePage<CarListRow> {
         this.carType = $x(xpathStart + rowNumber + "]/td[8]");
     }
 
+    /** Кликнуть ПКМ на тякущем ряду списка */
+    public PageCarsList contextClick() {
+        carName.contextClick();
+        return page;
+    }
+
     /** Удалить вагон в текущем ряду списка */
     public PageCarsList delete() {
-        carName.contextClick();
+        contextClick();
         page.clickDelete().clickModalDeleteOk();
         return page;
     }
