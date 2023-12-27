@@ -64,7 +64,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
     }
 
     @Test
-    @QaseId(277)
+    @QaseId(278)
     @DisplayName("Невозможность редактирования вагона с правом просмотра данных")
     public void testNotUpdatingWithRoleRead() {
         loginIfNeeded(User.READ);
