@@ -9,13 +9,6 @@ public class CarBaseTest extends BaseTest {
     protected static final String VALID_LENGTH = "1";
     protected static final String[] coefficients = {"1", "1", "1", "1", "1", "1", "1", "1"};
 
-    protected static void deleteCarByName(String name) {
-        loginIfNeeded();
-        open(PageCarsList.class)
-                .waitTableLoading()
-                .findCarRowByName(name)
-                .delete();
-    }
 
     /**
      * Создает экземпляр вагона, имя которого имеет суффикс в виде номера тест кейса,

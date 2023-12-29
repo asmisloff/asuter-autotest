@@ -50,3 +50,18 @@ TODO: дополнить и структурировать README
 `sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target`.
 В этом случае можно добавить сертификат Qase в JDK с помощью keytool (утилита в комплекте с JDK).
 Также, возможно, понадобится запускать с флагом `Dcom.sun.security.enableAIAcaIssuers=true`
+
+<h3>Замечание по нахождению элементов svg</h3>
+
+Элементы `svg` стандартным xpath не находятся. Для них и всех вложенных в них элементов нужно использовать функции name(), 
+например:
+```
+@FindBy(xpath = "//div[@id=\"rootContainer\"]/div/div[2]/div[1]/span/*[name()='svg']/*[name()='title']")
+```
+Для определения текста вложенных элементов можно использовать метод `getAttribute("innerHTML")`:
+```
+p.originalDataChangedTitle.should(Condition.match(
+        " the description of the predicate",
+        element -> "Исходные данные были изменены".equals(element.getAttribute("innerHTML")))
+);
+```

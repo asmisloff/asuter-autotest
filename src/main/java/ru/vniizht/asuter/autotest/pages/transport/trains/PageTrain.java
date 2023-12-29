@@ -22,11 +22,15 @@ public class PageTrain extends BasePage<PageTrain> {
 
     /* Элементы раздела "Составность" */
 
-    @FindBy(xpath = "/html/body/div/div[2]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/span/svg")
+    @FindBy(xpath = "//*[@id=\"rootContainer\"]/div/div[2]/div[1]/span/span/*[name()='svg']")
+    @As("Иконка \"Относительные значения\"")
+    public SelenideElement relativeValuesIcon;
+
+    @FindBy(xpath = "/html/body/div/div[2]/div[1]/div/div[2]/div[2]/div/div[2]/div[1]/span/*[name()='svg']")
     @As("Иконка изменения исходных данных")
     public SelenideElement originalDataChangedIcon;
 
-    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/div[2]/div[1]/span/svg/title")
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/div[2]/div[1]/span/*[name()='svg']/*[name()='title']")
     @As("Текст подсказки \"Исходные данные были изменены\"")
     public SelenideElement originalDataChangedTitle;
 

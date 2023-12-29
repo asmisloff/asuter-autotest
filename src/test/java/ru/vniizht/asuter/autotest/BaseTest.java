@@ -8,6 +8,8 @@ import ru.vniizht.asuter.autotest.constants.User;
 import ru.vniizht.asuter.autotest.pages.BasePage;
 import ru.vniizht.asuter.autotest.pages.login.PageLogin;
 import ru.vniizht.asuter.autotest.pages.main.PageMain;
+import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;
+import ru.vniizht.asuter.autotest.pages.transport.trains.PageTrainsList;
 import ru.vniizht.asuter.autotest.utils.UrlDeterminator;
 
 public class BaseTest {
@@ -81,5 +83,21 @@ public class BaseTest {
 
     public static void logoutIfNeeded() {
         if (currentUser != null) logout();
+    }
+
+    protected static void deleteCarByName(String name) {
+        loginIfNeeded();
+        open(PageCarsList.class)
+                .waitTableLoading()
+                .findCarRowByName(name)
+                .delete();
+    }
+
+    protected static void deleteTrainByName(String name) {
+        loginIfNeeded();
+        open(PageTrainsList.class)
+                .waitTableLoading()
+                .findTrainRowByName(name)
+                .delete();
     }
 }
