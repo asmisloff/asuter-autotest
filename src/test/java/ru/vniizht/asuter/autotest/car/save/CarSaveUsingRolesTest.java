@@ -58,7 +58,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
         assertFalse(
                 open(PageCarsList.class)
                         .waitTableLoading()
-                        .clickDisplayAllPages()
+                        .clickDisplayAllCarsOnPage()
                         .containsCarRowByName(car.name())
         );
     }
@@ -83,7 +83,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
 
         open(PageCarsList.class)
                 .waitTableLoading()
-                .clickDisplayAllPages()
+                .clickDisplayAllCarsOnPage()
                 .check(p -> {
                     p.findCarRowByName(testCar.name())
                             .check(r -> r.carName.shouldHave(text(testCar.name())));
@@ -113,7 +113,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
         assertFalse(
                 open(PageCarsList.class)
                         .waitTableLoading()
-                        .clickDisplayAllPages()
+                        .clickDisplayAllCarsOnPage()
                         .containsCarRowByName(car.name())
         );
     }
@@ -138,7 +138,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
 
         open(PageCarsList.class)
                 .waitTableLoading()
-                .clickDisplayAllPages()
+                .clickDisplayAllCarsOnPage()
                 .check(p -> {
                     p.findCarRowByName(testCar.name())
                             .check(r -> r.carName.shouldHave(text(testCar.name())));

@@ -8,6 +8,7 @@ import ru.vniizht.asuter.autotest.constants.User;
 import ru.vniizht.asuter.autotest.pages.BasePage;
 import ru.vniizht.asuter.autotest.pages.login.PageLogin;
 import ru.vniizht.asuter.autotest.pages.main.PageMain;
+import ru.vniizht.asuter.autotest.pages.transport.cars.CarListRow;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;
 import ru.vniizht.asuter.autotest.pages.transport.trains.PageTrainsList;
 import ru.vniizht.asuter.autotest.utils.UrlDeterminator;
@@ -91,6 +92,33 @@ public class BaseTest {
                 .waitTableLoading()
                 .findCarRowByName(name)
                 .delete();
+    }
+
+    protected static void deleteCarByName(String name, long delayMilliseconds) {
+        loginIfNeeded();
+        boolean deleted = false;
+        int attemptCount = 0;
+        while (!deleted) {
+            PageCarsList page = open(PageCarsList.class)
+                    .waitTime(delayMilliseconds / 2);
+            CarListRow row = null;
+            try {
+                row = page.findCarRowByName(name);
+            } catch (org.openqa.selenium.NoSuchElementException ex) {
+                // Если искомый элемент не найден
+                // значит возникла ситуация "Failed to fetch".
+                // В таком случае пробуем повторить попытку до 5 раз.
+                attemptCount++;
+                if (attemptCount == 5) {
+                    throw ex;
+                }
+            }
+            if (row != null) {
+                row.delete();
+                deleted = true;
+            }
+            page.waitTime(delayMilliseconds / 2);
+        }
     }
 
     protected static void deleteTrainByName(String name) {

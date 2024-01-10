@@ -6,6 +6,10 @@ import org.openqa.selenium.support.FindBy;
 import ru.vniizht.asuter.autotest.annotation.Url;
 import ru.vniizht.asuter.autotest.pages.BasePage;
 
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -39,9 +43,75 @@ public class PageCarsList extends BasePage<PageCarsList> {
     @As("Текст модального окна подтверждения")
     public SelenideElement confirmModalText;
 
+    @FindBy(xpath = "//div[@id=\"modalContainer\"]/div[1]/div/div[2]/div[1]/ul[1]/ul[1]/li[1]/a[normalize-space(text())='20']")
+    @As("Кнопка отображения 20 вагонов в списке")
+    public SelenideElement display20CarsOnPageLink;
+
     @FindBy(xpath = "//div[@id=\"modalContainer\"]/div[1]/div/div[2]/div[1]/ul[1]/ul[1]/li[2]/a[normalize-space(text())='Все']")
     @As("Кнопка отображения всех вагонов в списке")
-    public SelenideElement displayAllPagesLink;
+    public SelenideElement displayAllCarsOnPageLink;
+
+    @FindBy(xpath = "//div[@id=\"modalContainer\"]/div[1]/div/div[2]/div[1]/ul[2]/li[4]/a")
+    @As("Кнопка перехода на следующую страницу списка вагонов")
+    public SelenideElement nextPageLink;
+
+    @FindBy(xpath = "//div[@id=\"modalContainer\"]/div[1]/div/div[2]/div[1]/ul[2]/li[5]/a")
+    @As("Кнопка перехода на следующую страницу списка вагонов")
+    public SelenideElement lastPageLink;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/tbody/tr")
+    @As("Все строки таблицы тяговых вагонов")
+    public ElementsCollection allRows;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[3]")
+    @As("Заголовок столбца \"Наименование\"")
+    public SelenideElement nameColumn;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[4]")
+    @As("Заголовок столбца \"Число осей\"")
+    public SelenideElement numberOfAxlesColumn;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[5]")
+    @As("Заголовок столбца \"Учетная масса брутто\"")
+    public SelenideElement fullMassColumn;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[6]")
+    @As("Заголовок столбца \"Длина, м\"")
+    public SelenideElement lengthColumn;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[7]")
+    @As("Заголовок столбца \"Тип вагона\"")
+    public SelenideElement carTypeColumn;
+
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[8]")
+    @As("Заголовок столбца \"Время редактирования\"")
+    public SelenideElement changeTimeColumn;
+
+    @FindBy(xpath = "//div[@id=\"modalContainer\"]/div[1]/div/div[2]/div[1]/ul[1]/ul[2]/li")
+    @As("Кнопка поиска") // Активный элемент li
+    public SelenideElement searchButton;
+
+    @FindBy(xpath = "//div[@id=\"modalContainer\"]/div[1]/div/div[2]/div[1]/ul[1]/ul[2]/div/input")
+    @As("Поле поиска")
+    public SelenideElement searchInput;
+
+    private Map<String, Supplier<PageCarsList>> columns = Map.of(
+            "Наименование", this::clickNameColumn,
+            "Число осей", this::clickNumberOfAxlesColumn,
+            "Учетная масса брутто", this::clickFullMassColumn,
+            "Длина, м", this::clickLengthColumn,
+            "Тип вагона", this::clickCarTypeColumn,
+            "Время редактирования", this::clickChangeTimeColumn
+    );
+
+    private Map<String, Function<CarListRow, String>> rowTextGetters = Map.of(
+            "Наименование", CarListRow::getNameText,
+            "Число осей", CarListRow::getNumberOfAxlesText,
+            "Учетная масса брутто", CarListRow::getFullMassText,
+            "Длина, м", CarListRow::getLengthText,
+            "Тип вагона", CarListRow::getCarTypeText,
+            "Время редактирования", CarListRow::getChangeTimeText
+    );
 
     public PageCar clickCreate() {
         buttonCreate.click();
@@ -104,8 +174,146 @@ public class PageCarsList extends BasePage<PageCarsList> {
         return false;
     }
 
-    public PageCarsList clickDisplayAllPages() {
-        displayAllPagesLink.click();
+    public PageCarsList clickDisplay20CarsOnPage() {
+        display20CarsOnPageLink.click();
         return this;
+    }
+
+    public PageCarsList clickDisplayAllCarsOnPage() {
+        displayAllCarsOnPageLink.click();
+        return this;
+    }
+
+    public ElementsCollection getAllRows() {
+        return allRows;
+    }
+
+    public int getNumberOfRows() {
+        return allRows.size();
+    }
+
+    /**
+     * Возвращает ряд страницы Вагонов
+     * @param rowNumber номер ряда, начиная с 1
+     */
+    public CarListRow getCarListRow(int rowNumber) {
+        return new CarListRow(this, rowNumber);
+    }
+
+    public PageCarsList clickNextPageLink() {
+        nextPageLink.click();
+        return this;
+    }
+
+    public PageCarsList clickLastPageLink() {
+        lastPageLink.click();
+        return this;
+    }
+
+    /** Клик на заголовке столбца Наименование */
+    public PageCarsList clickNameColumn() {
+        nameColumn.click();
+        return this;
+    }
+
+    /** Клик на заголовке столбца Число осей */
+    public PageCarsList clickNumberOfAxlesColumn() {
+        numberOfAxlesColumn.click();
+        return this;
+    }
+
+    /** Клик на заголовке столбца Учетная масса брутто */
+    public PageCarsList clickFullMassColumn() {
+        fullMassColumn.click();
+        return this;
+    }
+
+    /** Клик на заголовке столбца Длина */
+    public PageCarsList clickLengthColumn() {
+        lengthColumn.click();
+        return this;
+    }
+
+    /** Клик на заголовке столбца Тип вагона */
+    public PageCarsList clickCarTypeColumn() {
+        carTypeColumn.click();
+        return this;
+    }
+
+    /** Клик на заголовке столбца Время редактирования */
+    public PageCarsList clickChangeTimeColumn() {
+        changeTimeColumn.click();
+        return this;
+    }
+
+    /** Клик на заголовке столбца с указанным именем */
+    public PageCarsList clickOnColumn(String columnName) {
+        return columns.get(columnName).get();
+    }
+
+    /**
+     * Возвращает список текстовых значений всех ячеек указанного столбца.
+     * @param columnName имя столбца
+     */
+    public List<String> getColumnRowTextValues(String columnName) {
+        List<String> textValues = new ArrayList<>();
+        final int numRows = getNumberOfRows();
+        for (int rowNumber = 1; rowNumber <= numRows; rowNumber++) {
+            CarListRow listRow = getCarListRow(rowNumber);
+            String textValue = rowTextGetters.get(columnName).apply(listRow);
+            textValues.add(textValue);
+        }
+        return textValues;
+    }
+
+    /** Клик на кнопке Поиск */
+    public PageCarsList clickSearch() {
+        searchButton.click();
+        return this;
+    }
+
+    /** Ввести значение в поле поиска */
+    public PageCarsList inputSearch(String value) {
+        searchInput.clear();
+        searchInput.sendKeys(value);
+        return this;
+    }
+
+    /** Найти вагоны по поисковому значению */
+    public List<CarListRow> findRowsBySearchValue(String searchValue) {
+        searchValue = searchValue.toLowerCase();
+        List<CarListRow> rows = new ArrayList<>();
+        final int numRows = getNumberOfRows();
+        for (int rowNumber = 1; rowNumber <= numRows; rowNumber++) {
+            var row = getCarListRow(rowNumber);
+            if (row.getNameText().toLowerCase().contains(searchValue)
+                    || row.getNumberOfAxlesText().contains(searchValue)
+                    || row.getFullMassText().contains(searchValue)
+                    || row.getLengthText().contains(searchValue)
+                    || row.getCarTypeText().toLowerCase().contains(searchValue)
+                    || row.getChangeTimeText().contains(searchValue)) {
+                rows.add(row);
+            }
+        }
+        return rows;
+    }
+
+    /** Получить строковое представление всех вагонов на странице */
+    public List<String> getCarsAsStrings() {
+        final List<String> list = new ArrayList<>();
+        final int numRows = getNumberOfRows();
+        for (int rowNumber = 1; rowNumber <= numRows; rowNumber++) {
+            list.add(getCarListRow(rowNumber).toString());
+        }
+        return list;
+    }
+
+    public List<String> getCarAbsoluteNumbers() {
+        final List<String> list = new ArrayList<>();
+        final int numRows = getNumberOfRows();
+        for (int rowNumber = 1; rowNumber <= numRows; rowNumber++) {
+            list.add(getCarListRow(rowNumber).getAbsoluteRowNumber());
+        }
+        return list;
     }
 }

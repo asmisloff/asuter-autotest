@@ -473,7 +473,7 @@ public class CarSaveTest extends CarBaseTest {
         assertFalse(
                 open(PageCarsList.class)
                         .waitTableLoading()
-                        .clickDisplayAllPages()
+                        .clickDisplayAllCarsOnPage()
                         .containsCarRowByName(oldCar.name())
         );
 
@@ -541,7 +541,7 @@ public class CarSaveTest extends CarBaseTest {
         assertFalse(
                 open(PageCarsList.class)
                         .waitTableLoading()
-                        .clickDisplayAllPages()
+                        .clickDisplayAllCarsOnPage()
                         .containsCarRowByName(oldCar.name())
         );
     }
