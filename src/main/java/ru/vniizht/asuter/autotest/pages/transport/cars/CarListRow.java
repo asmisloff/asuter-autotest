@@ -26,13 +26,17 @@ public class CarListRow extends BasePage<CarListRow> {
      */
     public CarListRow(PageCarsList page, int rowNumber) {
         this.page = page;
-        this.absoluteRowNumber = $x(xpathStart + rowNumber + "]/td[2]");
-        this.carName = $x(xpathStart + rowNumber + "]/td[3]");
-        this.numberOfAxles = $x(xpathStart + rowNumber + "]/td[4]");
-        this.fullMass = $x(xpathStart + rowNumber + "]/td[5]");
-        this.length = $x(xpathStart + rowNumber + "]/td[6]");
-        this.carType = $x(xpathStart + rowNumber + "]/td[7]");
-        this.changeTime = $x(xpathStart + rowNumber + "]/td[8]");
+        this.absoluteRowNumber = $x(xpathStart + rowNumber + "]/td[1]");
+        this.carName = $x(xpathStart + rowNumber + "]/td[2]");
+        this.numberOfAxles = $x(xpathStart + rowNumber + "]/td[3]");
+        this.fullMass = $x(xpathStart + rowNumber + "]/td[4]");
+        this.length = $x(xpathStart + rowNumber + "]/td[5]");
+        this.carType = $x(xpathStart + rowNumber + "]/td[6]");
+        this.changeTime = $x(xpathStart + rowNumber + "]/td[7]");
+    }
+
+    public PageCarsList getPage() {
+        return page;
     }
 
     /** Кликнуть ПКМ на текущем ряду списка */

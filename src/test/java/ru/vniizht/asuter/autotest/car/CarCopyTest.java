@@ -39,7 +39,7 @@ public class CarCopyTest extends CarBaseTest {
 
         // Копировать существующий вагон
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .contextClick()
                 .clickCopy();
@@ -47,7 +47,7 @@ public class CarCopyTest extends CarBaseTest {
         // Проверить имя копии вагона
         final String expectedName = car.name() + "(1)";
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(expectedName)
                 .check(r -> r.carName.shouldHave(text(expectedName)))
                 .also(p -> namesToDelete.add(expectedName));
@@ -68,7 +68,7 @@ public class CarCopyTest extends CarBaseTest {
 
         // Копировать существующий вагон
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .contextClick()
                 .clickCopy();
@@ -76,14 +76,14 @@ public class CarCopyTest extends CarBaseTest {
         // Проверить имя 1-й копии вагона
         final String expectedName1 = car.name() + "(1)";
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(expectedName1)
                 .check(r -> r.carName.shouldHave(text(expectedName1)))
                 .also(p -> namesToDelete.add(expectedName1));
 
         // Копировать существующий вагон еще раз
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .contextClick()
                 .clickCopy();
@@ -91,14 +91,14 @@ public class CarCopyTest extends CarBaseTest {
         // Проверить имя 2-й копии вагона
         final String expectedName2 = car.name() + "(2)";
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(expectedName2)
                 .check(r -> r.carName.shouldHave(text(expectedName2)))
                 .also(p -> namesToDelete.add(expectedName2));
 
         // Копировать 1-ю копию вагона
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(expectedName1)
                 .contextClick()
                 .clickCopy();
@@ -106,7 +106,7 @@ public class CarCopyTest extends CarBaseTest {
         // Проверить имя 3-й копии вагона
         final String expectedName3 = car.name() + "(1)(1)";
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(expectedName3)
                 .check(r -> r.carName.shouldHave(text(expectedName3)))
                 .also(p -> namesToDelete.add(expectedName3));

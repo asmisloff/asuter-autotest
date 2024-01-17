@@ -38,7 +38,7 @@ public class CarDeleteTest extends CarBaseTest {
 
         // Удалить вагон
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .contextClick()
                 .clickDelete()
@@ -47,7 +47,7 @@ public class CarDeleteTest extends CarBaseTest {
         // Проверить что вагон удален
         assertFalse(
                 open(PageCarsList.class)
-                        .waitTableLoading()
+                        .ensureTableExists()
                         .containsCarRowByName(car.name())
         );
     }
@@ -67,7 +67,7 @@ public class CarDeleteTest extends CarBaseTest {
 
         // Копировать существующий вагон
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .contextClick()
                 .clickCopy();
@@ -75,7 +75,7 @@ public class CarDeleteTest extends CarBaseTest {
         // Удалить скопированный вагон
         final String expectedCopyName = car.name() + "(1)";
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(expectedCopyName)
                 .contextClick()
                 .clickDelete()
@@ -84,7 +84,7 @@ public class CarDeleteTest extends CarBaseTest {
         // Проверить что скопированный вагон удален
         assertFalse(
                 open(PageCarsList.class)
-                        .waitTableLoading()
+                        .ensureTableExists()
                         .containsCarRowByName(expectedCopyName)
         );
     }

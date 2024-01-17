@@ -1,6 +1,7 @@
 package ru.vniizht.asuter.autotest.car.save;
 
 import io.qase.api.annotation.QaseId;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,13 +33,13 @@ public class CarSaveTest extends CarBaseTest {
     @BeforeEach
     public void init() {
         loginIfNeeded();
-        pageCar = open(PageCarsList.class).clickCreate();
+        pageCar = openCarsListPage().clickCreate();
     }
 
     @AfterEach
     public void deleteCreated() {
         if (namesToDelete.isEmpty()) return;
-        var page = open(PageCarsList.class).waitTableLoading();
+        var page = openCarsListPage().ensureTableExists();
         while (!namesToDelete.isEmpty()) {
             page.findCarRowByName(namesToDelete.poll()).delete();
         }
@@ -56,8 +57,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -85,8 +86,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -114,8 +115,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .clickEdit()
@@ -123,8 +124,8 @@ public class CarSaveTest extends CarBaseTest {
                 .pressTab()
                 .clickSave();
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -152,8 +153,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .clickEdit()
@@ -161,8 +162,8 @@ public class CarSaveTest extends CarBaseTest {
                 .pressTab()
                 .clickSave();
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -190,8 +191,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -219,8 +220,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -248,8 +249,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .clickEdit()
@@ -257,8 +258,8 @@ public class CarSaveTest extends CarBaseTest {
                 .pressTab()
                 .clickSave();
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -286,8 +287,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .clickEdit()
@@ -295,8 +296,8 @@ public class CarSaveTest extends CarBaseTest {
                 .pressTab()
                 .clickSave();
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -324,8 +325,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -353,8 +354,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -382,8 +383,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .clickEdit()
@@ -391,8 +392,8 @@ public class CarSaveTest extends CarBaseTest {
                 .pressTab()
                 .clickSave();
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -420,8 +421,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(car.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .clickEdit()
@@ -429,8 +430,8 @@ public class CarSaveTest extends CarBaseTest {
                 .pressTab()
                 .clickSave();
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(car.name())
                 .openCar()
                 .check(c -> {
@@ -471,14 +472,14 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(modifiedCar.name());
         assertFalse(
-                open(PageCarsList.class)
-                        .waitTableLoading()
+                openCarsListPage()
+                        .ensureTableExists()
                         .clickDisplayAllCarsOnPage()
                         .containsCarRowByName(oldCar.name())
         );
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(modifiedCar.name())
                 .openCar()
                 .check(c -> {
@@ -505,8 +506,8 @@ public class CarSaveTest extends CarBaseTest {
         );
         pageCar.clickSave();
 
-        pageCar = open(PageCarsList.class)
-                .waitTableLoading()
+        pageCar = openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(oldCar.name())
                 .openCar()
                 .clickEdit();
@@ -523,8 +524,8 @@ public class CarSaveTest extends CarBaseTest {
         pageCar.clickSave();
         namesToDelete.add(modifiedCar.name());
 
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .findCarRowByName(modifiedCar.name())
                 .openCar()
                 .check(c -> {
@@ -539,8 +540,8 @@ public class CarSaveTest extends CarBaseTest {
                     modifiedCar.checkCoefficientsEqual(c);
                 });
         assertFalse(
-                open(PageCarsList.class)
-                        .waitTableLoading()
+                openCarsListPage()
+                        .ensureTableExists()
                         .clickDisplayAllCarsOnPage()
                         .containsCarRowByName(oldCar.name())
         );
@@ -556,4 +557,8 @@ public class CarSaveTest extends CarBaseTest {
                 .inputTo(pageCar);
     }
 
+    @NotNull
+    private static PageCarsList openCarsListPage() {
+        return open(PageCarsList.class, PageCarsList.FIRST_TD_XPATH);
+    }
 }

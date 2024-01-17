@@ -37,7 +37,7 @@ public class CarDeleteStatesTest extends CarBaseTest {
     @DisplayName("Модальное окно всплывает при удалении вагона")
     public void testDeleteOpensModal() {
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(DELETE_CAR_NAME)
                 .contextClick()
                 .clickDelete()
@@ -55,21 +55,19 @@ public class CarDeleteStatesTest extends CarBaseTest {
     @DisplayName("Отмена действия в модальное окне при удалении вагона")
     public void testDeleteThenCancel() {
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(DELETE_CAR_NAME)
                 .contextClick()
                 .clickDelete()
                 .clickModalCancel()
-                .check(p -> {
-                    p.findCarRowByName(DELETE_CAR_NAME)
-                            .check(r -> r.carName.shouldHave(text(DELETE_CAR_NAME)));
-                });
+                .check(p -> p.findCarRowByName(DELETE_CAR_NAME)
+                        .check(r -> r.carName.shouldHave(text(DELETE_CAR_NAME))));
     }
 
     @AfterAll
     public static void tearDown() {
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(DELETE_CAR_NAME)
                 .contextClick()
                 .clickDelete()

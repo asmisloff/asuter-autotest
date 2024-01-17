@@ -1,7 +1,9 @@
 package ru.vniizht.asuter.autotest.car;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.ex.ElementNotFound;
 import io.qase.api.annotation.QaseId;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -22,12 +24,31 @@ import static ru.vniizht.asuter.autotest.utils.ListUtils.*;
 public class CarFilteringTest extends CarBaseTest {
 
     private final static Deque<String> namesToDelete = new LinkedList<>();
-    private static long delayDelete = 100;
 
     @AfterEach
     public void deleteCreated() {
+        if (namesToDelete.isEmpty()) return;
         while (!namesToDelete.isEmpty()) {
-            deleteCarByName(namesToDelete.pollLast(), delayDelete);
+            // Страница должна перезагружаться перед каждым удалением
+            // так как если использовать устаревшую страницу со списком вагонов, часть которых уже удалена,
+            // то не получится корректно найти строку таблицы по имени вагона
+            var page = openCarsListPage().ensureTableExists();
+            String nameToDelete = namesToDelete.pollLast();
+            boolean deleted = false;
+            int numAttempts = 0;
+            while (!deleted && numAttempts < 5) {
+                try {
+                    page.findCarRowByName(nameToDelete).delete();
+                    deleted = true;
+                } catch (ElementNotFound ex) {
+                    // Искомое имя не отобразилось в списке - перезагрузить страницу
+                    numAttempts++;
+                    page = openCarsListPage().ensureTableExists();
+                }
+            }
+            if (!deleted) throw new IllegalStateException(
+                    String.format("Подлежащий удалению вагон '%s' не найден на странице вагонов", nameToDelete)
+            );
         }
     }
 
@@ -36,7 +57,7 @@ public class CarFilteringTest extends CarBaseTest {
     @DisplayName("Сортировка объектов по количеству отображаемых на странице вагонов")
     public void testNumCarsInSortedPages() {
         loginIfNeeded(User.READ);
-        open(PageCarsList.class)
+        openCarsListPage().ensureTableExists()
                 .clickDisplayAllCarsOnPage()
                 .waitTime(100)
                 .check(p -> {
@@ -63,8 +84,8 @@ public class CarFilteringTest extends CarBaseTest {
         loginIfNeeded(User.READ);
         final List<String> initialValues = new ArrayList<>();
         final long timeForFrontend = 50;
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .also(p -> {
                     var values = p.getColumnRowTextValues(column);
                     initialValues.addAll(values);
@@ -104,24 +125,25 @@ public class CarFilteringTest extends CarBaseTest {
     public void testSecondPageAfterAdding21Cars() {
         loginIfNeeded(User.NSI);
         AtomicReference<String> originalFirstRowName = new AtomicReference<>();
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .also(p -> originalFirstRowName.set(p.getFirstCarRow().getNameText()))
                 .getFirstCarRow()
                 .also(r -> {
                     // Добавить 21 объект на страницу копированием
                     for (int i = 0; i < 21; i++) {
-                        var page = r.copy().waitTableLoading();
+                        var page = r.getPage();
+                        copyFirstCar(page);
                         Selenide.refresh();
-                        var name = page.getFirstCarRow().getNameText();
-                        namesToDelete.add(name);
+                        var nameOfCopyToDelete = page.getFirstCarRow().getNameText();
+                        namesToDelete.add(nameOfCopyToDelete);
                     }
                 });
         // перейти на 2-ю страницу
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .clickNextPageLink()
-                .waitTableLoading()
+                .ensureTableExists()
                 .check(p -> {
                     // объекты отображаются корректно
                     String expectedSecondRowName = originalFirstRowName.get();
@@ -131,7 +153,6 @@ public class CarFilteringTest extends CarBaseTest {
                     var secondRow = p.getCarListRow(2);
                     secondRow.carName.shouldHave(text(expectedSecondRowName));
                 });
-        delayDelete = 1000;
     }
 
     @QaseId(334)
@@ -142,7 +163,8 @@ public class CarFilteringTest extends CarBaseTest {
         loginIfNeeded(User.READ);
         List<String> expectedCars = new ArrayList<>();
         final long delay = 50;
-        open(PageCarsList.class)
+        openCarsListPage()
+                .ensureTableExists()
                 .clickDisplayAllCarsOnPage()
                 .waitTime(delay)
                 .also(p -> {
@@ -158,10 +180,11 @@ public class CarFilteringTest extends CarBaseTest {
                 });
 
         // Ввести значение для поиска и проверить результат
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .clickSearch()
                 .inputSearch(searchValue)
+                .waitTime(500)  // задержка против "Failed to fetch"
                 .pressTab()
                 .clickDisplayAllCarsOnPage()
                 .waitTime(delay)
@@ -186,23 +209,24 @@ public class CarFilteringTest extends CarBaseTest {
     @DisplayName("Нумерация объектов на страницах пагинации работает корректно на странице вагонов")
     public void testPaginationNumeration() {
         loginIfNeeded(User.NSI);
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .getFirstCarRow()
                 .also(r -> {
                     // Добавить 21 объект на страницу копированием
                     for (int i = 0; i < 21; i++) {
-                        var page = r.copy().waitTableLoading();
+                        var page = r.getPage();
+                        copyFirstCar(page);
                         Selenide.refresh();
                         var name = page.getFirstCarRow().tryToGetNameText();
                         namesToDelete.add(name);
                     }
                 });
         // перейти на 2-ю страницу
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .clickNextPageLink()
-                .waitTableLoading()
+                .ensureTableExists()
                 .check(p -> {
                     //Объекты на 2-й странице имеют номера 21-40
                     List<String> carNumbers = p.getCarAbsoluteNumbers();
@@ -210,7 +234,6 @@ public class CarFilteringTest extends CarBaseTest {
                         assertEquals(Integer.toString((i + 21)), carNumbers.get(i));
                     }
                 });
-        delayDelete = 1000;
     }
 
     @QaseId(336)
@@ -218,29 +241,41 @@ public class CarFilteringTest extends CarBaseTest {
     @DisplayName("Возможность открыть объекты со второй страницы пагинации на странице вагонов")
     public void testOpenCarsOnSecondPage() {
         loginIfNeeded(User.NSI);
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .getFirstCarRow()
                 .also(r -> {
                     // Добавить 21 объект на страницу копированием
                     for (int i = 0; i < 21; i++) {
-                        var page = r.copy().waitTableLoading();
+                        var page = r.getPage();
+                        copyFirstCar(page);
                         Selenide.refresh();
                         var name = page.getFirstCarRow().tryToGetNameText();
                         namesToDelete.add(name);
                     }
                 });
         // перейти на 2-ю страницу
-        open(PageCarsList.class)
-                .waitTableLoading()
+        openCarsListPage()
+                .ensureTableExists()
                 .clickNextPageLink()
-                .waitTableLoading()
+                .ensureTableExists()
                 .check(p -> {
                     var carRow = p.getFirstCarRow();
                     String name = carRow.getNameText();
                     PageCar pageCar = carRow.openCar();
                     pageCar.nameInput.shouldHave(value(name));
                 });
-        delayDelete = 1000;
+    }
+
+    private void copyFirstCar(PageCarsList page) {
+        page.getFirstCarRow()
+                .copy()
+                .waitTime(50)
+                .ensureTableExists();
+    }
+
+    @NotNull
+    private static PageCarsList openCarsListPage() {
+        return open(PageCarsList.class, PageCarsList.FIRST_TD_XPATH);
     }
 }

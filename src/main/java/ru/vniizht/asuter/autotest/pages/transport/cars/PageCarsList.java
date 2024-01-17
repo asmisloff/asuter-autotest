@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -18,6 +17,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class PageCarsList extends BasePage<PageCarsList> {
 
     private static final String TBODY_XPATH = "//div[@id=\"rootContainer\"]/div/table/tbody";
+    public static final String FIRST_ROW_PATH = TBODY_XPATH + "/tr[1]";
+    public static final String FIRST_TD_XPATH = FIRST_ROW_PATH + "/td[1]";
 
     @FindBy(xpath = "//button[@title='Создать']")
     @As("Кнопка \"Создать\"")
@@ -63,27 +64,27 @@ public class PageCarsList extends BasePage<PageCarsList> {
     @As("Все строки таблицы тяговых вагонов")
     public ElementsCollection allRows;
 
-    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[3]")
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[2]")
     @As("Заголовок столбца \"Наименование\"")
     public SelenideElement nameColumn;
 
-    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[4]")
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[3]")
     @As("Заголовок столбца \"Число осей\"")
     public SelenideElement numberOfAxlesColumn;
 
-    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[5]")
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[4]")
     @As("Заголовок столбца \"Учетная масса брутто\"")
     public SelenideElement fullMassColumn;
 
-    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[6]")
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[5]")
     @As("Заголовок столбца \"Длина, м\"")
     public SelenideElement lengthColumn;
 
-    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[7]")
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[6]")
     @As("Заголовок столбца \"Тип вагона\"")
     public SelenideElement carTypeColumn;
 
-    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[8]")
+    @FindBy(xpath = "//div[@id=\"rootContainer\"]/div/table/thead/tr/th[7]")
     @As("Заголовок столбца \"Время редактирования\"")
     public SelenideElement changeTimeColumn;
 
@@ -95,7 +96,7 @@ public class PageCarsList extends BasePage<PageCarsList> {
     @As("Поле поиска")
     public SelenideElement searchInput;
 
-    private Map<String, Supplier<PageCarsList>> columns = Map.of(
+    private final Map<String, Supplier<PageCarsList>> columns = Map.of(
             "Наименование", this::clickNameColumn,
             "Число осей", this::clickNumberOfAxlesColumn,
             "Учетная масса брутто", this::clickFullMassColumn,
@@ -104,7 +105,7 @@ public class PageCarsList extends BasePage<PageCarsList> {
             "Время редактирования", this::clickChangeTimeColumn
     );
 
-    private Map<String, Function<CarListRow, String>> rowTextGetters = Map.of(
+    private final Map<String, Function<CarListRow, String>> rowTextGetters = Map.of(
             "Наименование", CarListRow::getNameText,
             "Число осей", CarListRow::getNumberOfAxlesText,
             "Учетная масса брутто", CarListRow::getFullMassText,
@@ -118,22 +119,24 @@ public class PageCarsList extends BasePage<PageCarsList> {
         return page(PageCar.class);
     }
 
-    /** Подождать загрузки элементов таблицы. */
-    public PageCarsList waitTableLoading() {
+    /** Убедиться что таблица существует. */
+    public PageCarsList ensureTableExists() {
         // Пока условие не выполняется, будет ждать до 4-х секунд
         $x(TBODY_XPATH).should(exist);
-        $$x(TBODY_XPATH + "/tr").shouldHave(sizeGreaterThan(0));
+        $x(FIRST_ROW_PATH).should(exist);
         return this;
     }
 
     /** Нажать кнопку "Удалить" в контекстном меню */
     public PageCarsList clickDelete() {
+        deleteButtonInContextMenu.should(exist);
         deleteButtonInContextMenu.click();
         return this;
     }
 
     /** Нажать кнопку "Копировать" в контекстном меню */
     public PageCarsList clickCopy() {
+        copyButtonInContextMenu.should(exist);
         copyButtonInContextMenu.click();
         return this;
     }
@@ -157,6 +160,7 @@ public class PageCarsList extends BasePage<PageCarsList> {
     public CarListRow findCarRowByName(String name) {
         String xpathByName = String.format(TBODY_XPATH + "/tr[td[normalize-space(text()) = '%s']]", name);
         SelenideElement trByName = $(By.xpath(xpathByName));
+        trByName.should(exist);
         ElementsCollection precedingSiblings = trByName.$$(By.xpath("./preceding-sibling::tr"));
         int rowNumber = precedingSiblings.size() + 1;
         return new CarListRow(this, rowNumber);

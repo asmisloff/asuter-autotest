@@ -1,6 +1,7 @@
 package ru.vniizht.asuter.autotest.pages.transport.cars;
 
 import com.codeborne.selenide.As;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.support.FindBy;
@@ -249,12 +250,21 @@ public class PageCar extends BasePage<PageCar> {
 
     /** Нажать кнопку Сохранить */
     public PageCar clickSave() {
+        saveButton.should(Condition.exist);
         saveButton.click();
+        return this;
+    }
+
+    public PageCar clickSave(long delay) {
+        saveButton.should(Condition.exist);
+        saveButton.click();
+        this.waitTime(delay);
         return this;
     }
 
     /** Нажать кнопку Редактировать */
     public PageCar clickEdit() {
+        editButton.should(Condition.exist);
         editButton.click();
         return this;
     }

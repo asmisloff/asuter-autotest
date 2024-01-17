@@ -57,7 +57,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
 
         assertFalse(
                 open(PageCarsList.class)
-                        .waitTableLoading()
+                        .ensureTableExists()
                         .clickDisplayAllCarsOnPage()
                         .containsCarRowByName(car.name())
         );
@@ -69,7 +69,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
     public void testNotUpdatingWithRoleRead() {
         loginIfNeeded(User.READ);
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(testCar.name())
                 .openCar()
                 .clickEdit()
@@ -82,7 +82,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
                 });
 
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .clickDisplayAllCarsOnPage()
                 .check(p -> {
                     p.findCarRowByName(testCar.name())
@@ -112,7 +112,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
 
         assertFalse(
                 open(PageCarsList.class)
-                        .waitTableLoading()
+                        .ensureTableExists()
                         .clickDisplayAllCarsOnPage()
                         .containsCarRowByName(car.name())
         );
@@ -124,7 +124,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
     public void testNotUpdatingWithRoleCalc() {
         loginIfNeeded(User.CALC);
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(testCar.name())
                 .openCar()
                 .clickEdit()
@@ -137,7 +137,7 @@ public class CarSaveUsingRolesTest extends CarBaseTest {
                 });
 
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .clickDisplayAllCarsOnPage()
                 .check(p -> {
                     p.findCarRowByName(testCar.name())

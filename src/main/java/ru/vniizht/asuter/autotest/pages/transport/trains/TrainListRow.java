@@ -23,15 +23,15 @@ public class TrainListRow {
 
     public TrainListRow(PageTrainsList page, int rowNumber) {
         this.page = page;
-        trainName = $x(xpathStart + rowNumber + "]/td[3]");
-        numCars = $x(xpathStart + rowNumber + "]/td[4]");
-        numAxles = $x(xpathStart + rowNumber + "]/td[5]");
-        weight = $x(xpathStart + rowNumber + "]/td[6]");
-        length = $x(xpathStart + rowNumber + "]/td[7]");
-        brakePadType = $x(xpathStart + rowNumber + "]/td[8]");
-        pressingForceOnBrakePad = $x(xpathStart + rowNumber + "]/td[9]");
-        powerOfUndercarGenerator = $x(xpathStart + rowNumber + "]/td[10]");
-        changeTime = $x(xpathStart + rowNumber + "]/td[11]");
+        trainName = $x(xpathStart + rowNumber + "]/td[2]");
+        numCars = $x(xpathStart + rowNumber + "]/td[3]");
+        numAxles = $x(xpathStart + rowNumber + "]/td[4]");
+        weight = $x(xpathStart + rowNumber + "]/td[5]");
+        length = $x(xpathStart + rowNumber + "]/td[6]");
+        brakePadType = $x(xpathStart + rowNumber + "]/td[7]");
+        pressingForceOnBrakePad = $x(xpathStart + rowNumber + "]/td[8]");
+        powerOfUndercarGenerator = $x(xpathStart + rowNumber + "]/td[9]");
+        changeTime = $x(xpathStart + rowNumber + "]/td[10]");
     }
 
     /** Кликнуть ПКМ на тякущем ряду списка */

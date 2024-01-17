@@ -1,9 +1,13 @@
 package ru.vniizht.asuter.autotest;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ex.ElementNotFound;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeAll;
+import org.openqa.selenium.By;
 import ru.vniizht.asuter.autotest.constants.User;
 import ru.vniizht.asuter.autotest.pages.BasePage;
 import ru.vniizht.asuter.autotest.pages.login.PageLogin;
@@ -12,6 +16,8 @@ import ru.vniizht.asuter.autotest.pages.transport.cars.CarListRow;
 import ru.vniizht.asuter.autotest.pages.transport.cars.PageCarsList;
 import ru.vniizht.asuter.autotest.pages.transport.trains.PageTrainsList;
 import ru.vniizht.asuter.autotest.utils.UrlDeterminator;
+
+import static com.codeborne.selenide.Selenide.$;
 
 public class BaseTest {
 
@@ -35,6 +41,48 @@ public class BaseTest {
         String url = urlDeterminator.urlOf(pageClass);
         Selenide.open(url);
         return Selenide.page(pageClass);
+    }
+
+    /**
+     * Пытается без предварительной задержки открыть страницу до 5 раз
+     * @param pageClass класс страницы
+     * @param targetElementXPath XPath целевого элемента на странице для проверки того, что данные получены
+     */
+    public static <T extends BasePage> T open(Class<T> pageClass, String targetElementXPath) {
+        return open(pageClass, targetElementXPath, 0, 5);
+    }
+
+    /**
+     * Пытается открыть страницу заданное количество раз.
+     * Для уверенности в том, что данные с бэкенда получены используется целевой элемент.
+     * Если он не найден, значит данные не получены - ошибка "Failed to fetch" (в Chrome).
+     * @param pageClass класс страницы
+     * @param targetElementXPath XPath целевого элемента на странице для проверки того, что данные получены
+     * @param delayBeforeFetch задержка перед запросом, миллисекунд
+     */
+    public static <T extends BasePage> T open(Class<T> pageClass, String targetElementXPath, long delayBeforeFetch, int numAttempts) {
+        SelenideElement targetElement;
+        int attemptCount = 0;
+        BasePage page = null;
+        boolean exists = false;
+        while (!exists) {
+            if (delayBeforeFetch > 0) {
+                Selenide.sleep(delayBeforeFetch);
+            }
+            page = open(pageClass);
+            targetElement = $(By.xpath(targetElementXPath));
+            try {
+                // При отсутствии целевого элемента будет ожидание до 4-х секунд, что даст задержку перед повторным запросом
+                targetElement.should(Condition.exist);
+                exists = true;
+            } catch (ElementNotFound ex) {
+                attemptCount++;
+                if (attemptCount == numAttempts) {
+                    throw ex;
+                }
+            }
+        }
+        return (T) page;
     }
 
     /**
@@ -89,7 +137,7 @@ public class BaseTest {
     protected static void deleteCarByName(String name) {
         loginIfNeeded();
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(name)
                 .delete();
     }

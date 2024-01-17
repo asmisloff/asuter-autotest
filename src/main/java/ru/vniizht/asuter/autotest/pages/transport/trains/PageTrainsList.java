@@ -76,7 +76,7 @@ public class PageTrainsList extends BasePage<PageTrainsList> {
     }
 
     public TrainListRow findTrainRowByName(String trainName) {
-        String xpathByName = String.format(TBODY_XPATH + "/tr[td[3][normalize-space(text()) = '%s']]", trainName);
+        String xpathByName = String.format(TBODY_XPATH + "/tr[td[2][normalize-space(text()) = '%s']]", trainName);
         SelenideElement trByName = $(By.xpath(xpathByName));
         ElementsCollection precedingSiblings = trByName.$$(By.xpath("./preceding-sibling::tr"));
         int rowNumber = precedingSiblings.size() + 1;

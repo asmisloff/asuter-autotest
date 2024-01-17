@@ -47,7 +47,7 @@ public class CarPageStatesTest extends CarBaseTest {
                 .clickSave();
 
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(testCarName)
                 .openCar()
                 .check(p -> {
@@ -77,7 +77,7 @@ public class CarPageStatesTest extends CarBaseTest {
 
         final String modifiedCarName = testCarName + "_2";
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(testCarName)
                 .openCar()
                 .clickEdit()
@@ -115,7 +115,7 @@ public class CarPageStatesTest extends CarBaseTest {
                 .clickSave();
 
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(testCarName)
                 .openCar()
                 .clickEdit()
@@ -198,7 +198,7 @@ public class CarPageStatesTest extends CarBaseTest {
                 .clickSave();
 
         open(PageCarsList.class)
-                .waitTableLoading()
+                .ensureTableExists()
                 .findCarRowByName(testCarName)
                 .openCar()
                 .check(p -> {

@@ -17,6 +17,7 @@ import static ru.vniizht.asuter.autotest.Messages.*;
 public class CarValidateRedBackgroundTest extends BaseTest {
 
     private static final Condition redBackground = cssValue("background-color", Color.PINK.rgbaValue);
+    private static final Condition grayBackground = cssValue("background-color", Color.GRAY_BG_IN_AUTO_FIELDS.rgbaValue);
     private static final Condition messageFieldIsRequired = attribute("title", FieldIsRequired);
 
     @QaseId(312)
@@ -179,11 +180,16 @@ public class CarValidateRedBackgroundTest extends BaseTest {
     public void testFullMassInvalidCases(String v) {
         loginIfNeeded();
         open(PageCarsList.class).clickCreate()
+                .check(p -> {
+                    p.fullMassInput.shouldHave(grayBackground);
+                    p.fullMassInput.shouldHave(attribute("title", FieldIsFilledInAutomatically));
+                })
                 .inputContainerMass(v)
                 .pressTab()
                 .check(p -> {
                     p.fullMassInput.shouldHave(redBackground);
-                    p.fullMassInput.shouldHave(attribute("title", numberOutOfRangeV2(1, 10_000, 3)));
+                    String expectedTitle = FieldIsFilledInAutomatically + "\n" + numberOutOfRangeV2(1, 10_000, 3);
+                    p.fullMassInput.shouldHave(attribute("title", expectedTitle));
                 });
     }
 
@@ -194,11 +200,16 @@ public class CarValidateRedBackgroundTest extends BaseTest {
     public void testMassPerAxleInvalidCases(String v) {
         loginIfNeeded();
         open(PageCarsList.class).clickCreate()
+                .check(p -> {
+                    p.fullMassInput.shouldHave(grayBackground);
+                    p.fullMassInput.shouldHave(attribute("title", FieldIsFilledInAutomatically));
+                })
                 .inputContainerMass(v)
                 .pressTab()
                 .check(p -> {
                     p.massPerAxleInput.shouldHave(redBackground);
-                    p.massPerAxleInput.shouldHave(attribute("title", numberOutOfRangeV2(1, 100, 3)));
+                    String expectedTitle = FieldIsFilledInAutomatically + "\n" + numberOutOfRangeV2(1, 100, 3);
+                    p.massPerAxleInput.shouldHave(attribute("title", expectedTitle));
                 });
     }
 
