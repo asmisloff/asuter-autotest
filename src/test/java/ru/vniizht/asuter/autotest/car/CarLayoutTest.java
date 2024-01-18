@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Condition.*;
 import static ru.vniizht.asuter.autotest.Messages.*;
 
 @DisplayName("Вагоны: Вёрстка")
-public class CarLayout extends CarBaseTest {
+public class CarLayoutTest extends CarBaseTest {
 
     @QaseId(340)
     @Test

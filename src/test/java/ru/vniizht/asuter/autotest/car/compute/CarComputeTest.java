@@ -68,9 +68,9 @@ public class CarComputeTest extends CarBaseTest {
                 .clickCreate()
                 .also(p -> {
                     p.inputContainerMass("8");
-                    p.inputNetMass("15,998");
+                    p.inputNetMass("15,997");
                     p.pressTab();
-                    p.fullMassInput.shouldHave(validInput("23,998"));
+                    p.fullMassInput.shouldHave(validInput("23,997"));
                     p.massPerAxleInput.shouldHave(validInput("5,999"));
                 });
         logout();
